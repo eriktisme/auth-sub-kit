@@ -8,6 +8,7 @@ import {
   UserPoolDomain,
   UserPoolIdentityProviderGoogle,
 } from 'aws-cdk-lib/aws-cognito'
+import { StringParameter } from 'aws-cdk-lib/aws-ssm'
 
 interface GoogleClientProps {
   clientId: string
@@ -36,6 +37,11 @@ export class AuthStack extends Stack {
         email: true,
       },
       userPoolName: `${props.prefix}-auth-sub-kit`,
+    })
+
+    new StringParameter(this, 'cognito-user-pool-id', {
+      parameterName: `${props.prefix}.AuthSubKitUserPoolId`,
+      stringValue: userPool.userPoolId,
     })
 
     new UserPoolDomain(this, 'cognito-user-pool-domain', {

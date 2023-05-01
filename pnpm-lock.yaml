@@ -59,6 +59,12 @@ importers:
         specifier: 5.0.4
         version: 5.0.4
 
+  apps/api:
+    dependencies:
+      '@auth-sub-kit/api':
+        specifier: workspace:*
+        version: 'link:'
+
   apps/auth: {}
 
   apps/client:

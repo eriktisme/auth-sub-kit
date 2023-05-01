@@ -1,0 +1,7 @@
+type Test {
+  id: ID!
+}
+
+type Query {
+  test: Test @aws_cognito_user_pools
+}
