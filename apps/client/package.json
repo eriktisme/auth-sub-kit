@@ -12,6 +12,9 @@
     "test:cdk": "jest --config=jest.cdk.config.ts --passWithNoTests"
   },
   "dependencies": {
+    "aws-amplify": "^5.1.4",
+    "aws-crt": "^1.15.15",
+    "encoding": "^0.1.13",
     "next": "13.3.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",

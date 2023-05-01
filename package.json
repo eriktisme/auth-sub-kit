@@ -15,10 +15,13 @@
     "dev": "nx run-many --target=dev",
     "generate-lockfile": "nx run-many --target=generate-lockfile",
     "lint": "nx run-many --target=lint",
-    "nx": "nx"
+    "nx": "nx",
+    "test": "nx run-many --target=test",
+    "test:cdk": "nx run-many --target=test:cdk"
   },
   "devDependencies": {
     "@aws-cdk/aws-apprunner-alpha": "2.77.0-alpha.0",
+    "@types/jest": "^29.5.1",
     "@typescript-eslint/eslint-plugin": "^5.59.1",
     "@typescript-eslint/parser": "^5.59.1",
     "aws-cdk": "^2.77.0",

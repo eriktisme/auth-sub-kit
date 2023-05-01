@@ -11,3 +11,6 @@ coverage
 
 # cdk
 cdk.out
+
+# environment
+.envrc

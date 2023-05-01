@@ -3,7 +3,7 @@ import { Template } from 'aws-cdk-lib/assertions'
 import { AppStack } from '../index'
 
 const stack = new AppStack(new App(), 'app-stack', {
-  domain: 'mealgpt.xyz',
+  domain: 'auth-sub-kit.dev',
   prefix: 'prod',
 })
 
@@ -12,25 +12,25 @@ const template = Template.fromStack(stack)
 describe('AppStack', () => {
   it('should configure hosted zone', () => {
     template.hasResourceProperties('AWS::Route53::HostedZone', {
-      Name: 'mealgpt.xyz.',
+      Name: 'auth-sub-kit.dev.',
     })
 
     template.hasResourceProperties('AWS::Route53::RecordSet', {
       Type: 'A',
       HostedZoneId: { Ref: 'networkhostedzoneC9E85F68' },
-      Name: 'mealgpt.xyz.',
+      Name: 'auth-sub-kit.dev.',
     })
 
     template.hasResourceProperties('AWS::Route53::RecordSet', {
       Type: 'AAAA',
       HostedZoneId: { Ref: 'networkhostedzoneC9E85F68' },
-      Name: 'mealgpt.xyz.',
+      Name: 'auth-sub-kit.dev.',
     })
   })
 
   it('should configure certificate', () => {
     template.hasResourceProperties('AWS::CertificateManager::Certificate', {
-      DomainName: 'mealgpt.xyz',
+      DomainName: 'auth-sub-kit.dev',
     })
   })
 
@@ -38,7 +38,7 @@ describe('AppStack', () => {
     template.hasResourceProperties('AWS::S3::Bucket', {
       WebsiteConfiguration: {
         RedirectAllRequestsTo: {
-          HostName: 'mealgpt.xyz',
+          HostName: 'auth-sub-kit.dev',
           Protocol: 'https',
         },
       },
@@ -64,7 +64,7 @@ describe('AppStack', () => {
   it('should configure distribution', () => {
     template.hasResourceProperties('AWS::CloudFront::Distribution', {
       DistributionConfig: {
-        Aliases: ['mealgpt.xyz'],
+        Aliases: ['auth-sub-kit.dev'],
         Enabled: true,
         HttpVersion: 'http2and3',
         IPV6Enabled: true,
