@@ -7,6 +7,9 @@ importers:
       '@aws-cdk/aws-apprunner-alpha':
         specifier: 2.77.0-alpha.0
         version: 2.77.0-alpha.0(aws-cdk-lib@2.77.0)(constructs@10.2.11)
+      '@types/jest':
+        specifier: ^29.5.1
+        version: 29.5.1
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.59.1
         version: 5.59.1(@typescript-eslint/parser@5.59.1)(eslint@8.39.0)(typescript@5.0.4)
@@ -58,6 +61,8 @@ importers:
       typescript:
         specifier: 5.0.4
         version: 5.0.4
+
+  apps/auth: {}
 
   apps/client:
     dependencies:
