@@ -1,9 +1,7 @@
 'use client'
 
-import { Amplify, Auth } from 'aws-amplify'
-import { AmplifyConfig } from '@/lib'
-
-Amplify.configure(AmplifyConfig)
+import '@/lib/amplify/client'
+import { Auth } from 'aws-amplify'
 
 export const SocialLoginForm = () => {
   const signIn = async () => {

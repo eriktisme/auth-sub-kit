@@ -49,7 +49,7 @@ export class AuthStack extends Stack {
       userPool,
       supportedIdentityProviders: [UserPoolClientIdentityProvider.GOOGLE],
       oAuth: {
-        callbackUrls: [`https://${props.domain}`],
+        callbackUrls: [`https://${props.domain}/start`],
         logoutUrls: [`htttps://${props.domain}`],
       },
     })
