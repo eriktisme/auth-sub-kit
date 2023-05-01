@@ -1,0 +1,10 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "extends": ["plugin:prettier/recommended"],
+  "plugins": ["@typescript-eslint", "@next/eslint-plugin-next"],
+  "rules": {
+    "prettier/prettier": "error"
+  },
+  "ignorePatterns": ["**/node_modules/**", "**/cdk.out/**", "**/coverage/**"]
+}

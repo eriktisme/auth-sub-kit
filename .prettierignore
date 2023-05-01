@@ -1,0 +1,8 @@
+coverage
+cdk.out
+cdk_out
+*.d.ts
+pnpm-lock.yaml
+.next
+out
+server/appsync.ts

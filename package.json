@@ -1,0 +1,49 @@
+{
+  "name": "auth-sub-kit",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eriktisme/auth-sub-kit"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Erik van Dam"
+  },
+  "scripts": {
+    "build": "nx run-many --target=build",
+    "cdk": "nx run-many --target=cdk",
+    "dev": "nx run-many --target=dev",
+    "generate-lockfile": "nx run-many --target=generate-lockfile",
+    "lint": "nx run-many --target=lint",
+    "nx": "nx"
+  },
+  "devDependencies": {
+    "@aws-cdk/aws-apprunner-alpha": "2.77.0-alpha.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
+    "@typescript-eslint/parser": "^5.59.1",
+    "aws-cdk": "^2.77.0",
+    "aws-cdk-lib": "^2.77.0",
+    "concurrently": "^8.0.1",
+    "constructs": "^10.2.11",
+    "eslint": "8.39.0",
+    "eslint-config-next": "13.3.2",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jest": "^29.5.0",
+    "nx": "14.5.6",
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.2.8",
+    "ts-jest": "^29.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "5.0.4"
+  },
+  "nx": {
+    "targets": {
+      "build": {
+        "outputs": [
+          "{projectRoot}/.next"
+        ]
+      }
+    }
+  }
+}
