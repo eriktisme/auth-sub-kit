@@ -1,0 +1,15 @@
+{
+  "name": "@auth-sub-kit/api",
+  "scripts": {
+    "cdk": "cdk",
+    "lint": "eslint",
+    "test": "concurrently \"pnpm test:cdk\"",
+    "test:cdk": "jest --passWithNoTests"
+  },
+  "dependencies": {
+    "@auth-sub-kit/api": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.114"
+  }
+}

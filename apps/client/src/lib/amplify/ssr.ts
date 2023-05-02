@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers'
 import { withSSRContext } from 'aws-amplify'
 import { config } from './config'
+import { environmentVariables } from '@/env'
 
 const serialize = (c: any) => {
   const attrs = [
@@ -30,7 +31,17 @@ export const getAmplifyWithSSRContext = () => {
     req: { headers: { cookie: serializeMultiple(cookie.getAll()) } },
   })
 
-  SSR.configure(config)
+  SSR.configure({
+    ...config,
+    API: {
+      graphql_endpoint: environmentVariables.API,
+      graphql_headers: async () => {
+        const currentSession = await SSR.Auth.currentSession()
+
+        return { Authorization: currentSession.getIdToken().getJwtToken() }
+      },
+    },
+  })
 
   return SSR
 }

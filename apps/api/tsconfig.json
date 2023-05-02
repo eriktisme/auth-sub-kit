@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.cdk.json",
+  "include": ["bin", "lib"],
+  "exclude": ["cdk.out"]
+}

@@ -7,5 +7,10 @@
       }
     }
   },
+  "targetDefaults": {
+    "cdk": {
+      "dependsOn": ["^build"]
+    }
+  },
   "defaultBase": "master"
 }

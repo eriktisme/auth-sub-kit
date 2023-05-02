@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 const environmentVariablesSchema = z.object({
   PREFIX: z.string(),
+  API: z.string(),
   COGNITO_USER_POOL_ID: z.string(),
   COGNITO_USER_POOL_CLIENT_ID: z.string(),
   COGNITO_USER_POOL_DOMAIN: z.string(),
@@ -10,6 +11,7 @@ const environmentVariablesSchema = z.object({
 
 export const environmentVariables = environmentVariablesSchema.parse({
   PREFIX: process.env.NEXT_PUBLIC_PREFIX!,
+  API: process.env.NEXT_PUBLIC_API!,
   COGNITO_USER_POOL_ID: process.env.NEXT_PUBLIC_COGNITO_USER_POOL_ID!,
   COGNITO_USER_POOL_CLIENT_ID:
     process.env.NEXT_PUBLIC_COGNITO_USER_POOL_CLIENT_ID!,
