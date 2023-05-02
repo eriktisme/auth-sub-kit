@@ -27,6 +27,7 @@
     "aws-cdk-lib": "^2.77.0",
     "concurrently": "^8.0.1",
     "constructs": "^10.2.11",
+    "esbuild": "0.17.18",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.2",
     "eslint-config-prettier": "^8.8.0",

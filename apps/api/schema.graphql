@@ -1,7 +1,7 @@
-type Test {
+type Test @aws_cognito_user_pools @aws_iam {
   id: ID!
 }
 
 type Query {
-  test: Test @aws_cognito_user_pools
+  test: Test @aws_cognito_user_pools @aws_iam
 }

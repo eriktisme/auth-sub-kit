@@ -8,5 +8,8 @@
   },
   "dependencies": {
     "@auth-sub-kit/api": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.114"
   }
 }
