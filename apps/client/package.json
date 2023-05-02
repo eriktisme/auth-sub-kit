@@ -4,24 +4,22 @@
     "build": "next build",
     "cdk": "cdk",
     "dev": "next dev",
-    "generate-lockfile": "make-dedicated-lockfile",
     "lint": "next lint",
+    "preview": "next build && next start",
     "start": "next start",
     "test": "concurrently \"pnpm test:app\" \"pnpm test:cdk\"",
-    "test:app": "jest --passWithNoTests",
-    "test:cdk": "jest --config=jest.cdk.config.ts --passWithNoTests"
+    "test:app": "jest --passWithNoTests"
   },
   "dependencies": {
     "aws-amplify": "^5.1.4",
     "aws-crt": "^1.15.15",
     "encoding": "^0.1.13",
-    "next": "13.3.2",
+    "next": "13.3.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@pnpm/make-dedicated-lockfile": "^0.5.2",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.4.3",
@@ -30,9 +28,10 @@
     "@types/react-dom": "18.2.1",
     "@types/testing-library__jest-dom": "5.14.5",
     "autoprefixer": "10.4.14",
+    "eslint": "8.39.0",
     "jest-environment-jsdom": "29.5.0",
     "postcss": "8.4.23",
     "tailwindcss": "3.3.2",
-    "typescript": "5.0.4"
+    "vercel": "^29.0.3"
   }
 }
