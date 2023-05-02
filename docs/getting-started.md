@@ -17,4 +17,5 @@ All the following commands are used to install dependencies or deploy.
 
 - `pnpm i`: To install the external dependencies.
 - `pnpm cdk deploy`: To deploy the AWS infrastructure.
+- `pnpm vercel deploy`: To deploy the web applications.
 - `pnpm test`: To run the unit tests.

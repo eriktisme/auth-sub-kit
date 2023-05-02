@@ -1,9 +1,9 @@
-import { ReactNode } from 'react'
+import { ReactNode, Suspense } from 'react'
 
 interface StartLayoutProps {
   children?: ReactNode
 }
 
 export default function StartLayout({ children }: StartLayoutProps) {
-  return <>{children}</>
+  return <Suspense fallback={null}>{children}</Suspense>
 }
