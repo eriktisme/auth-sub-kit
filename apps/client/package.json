@@ -11,9 +11,11 @@
     "test:app": "jest --passWithNoTests"
   },
   "dependencies": {
+    "@sentry/nextjs": "^7.50.0",
     "aws-amplify": "^5.1.4",
     "aws-crt": "^1.15.15",
     "encoding": "^0.1.13",
+    "graphql-tag": "2.12.6",
     "next": "13.3.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
