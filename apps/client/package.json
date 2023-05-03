@@ -7,7 +7,7 @@
     "lint": "next lint",
     "preview": "next build && next start",
     "start": "next start",
-    "test": "concurrently \"pnpm test:app\" \"pnpm test:cdk\"",
+    "test": "concurrently \"pnpm test:app\"",
     "test:app": "jest --passWithNoTests"
   },
   "dependencies": {
