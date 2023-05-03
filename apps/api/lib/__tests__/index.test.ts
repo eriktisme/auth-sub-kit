@@ -10,5 +10,9 @@ const stack = new ApiStack(new App(), 'api-stack', {
 const template = Template.fromStack(stack)
 
 describe('ApiStack', () => {
-  //
+  it('should configure appsync', () => {
+    template.hasResourceProperties('AWS::AppSync::GraphQLApi', {
+      //
+    })
+  })
 })
