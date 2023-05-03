@@ -1,5 +1,6 @@
 export * from './Avatar'
 export * from './MainNav'
+export * from './SidebarNav'
 export * from './SiteFooter'
 export * from './SiteHeader'
 export * from './UserAccountNav'

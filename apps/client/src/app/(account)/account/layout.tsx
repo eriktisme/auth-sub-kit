@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { getAmplifyWithSSRContext } from '@/lib'
 import { getCurrentUser } from '@/lib/session'
 import { notFound } from 'next/navigation'
-import { MainNav, SiteFooter, UserAccountNav } from '@/components'
+import { MainNav, SidebarNav, SiteFooter, UserAccountNav } from '@/components'
 
 interface DashboardLayoutProps {
   children?: ReactNode
@@ -33,8 +33,21 @@ export default async function AccountLayout({
           <UserAccountNav user={currentUser} />
         </div>
       </header>
-      <div className="mx-auto flex w-full max-w-7xl flex-1 px-4 lg:px-8">
-        <aside></aside>
+      <div className="mx-auto flex w-full max-w-7xl flex-1 gap-10 px-4 lg:px-8">
+        <aside className="hidden w-[200px] flex-col md:flex">
+          <SidebarNav
+            items={[
+              {
+                href: '/account',
+                title: 'General',
+              },
+              {
+                href: '/account/billing',
+                title: 'Billing',
+              },
+            ]}
+          />
+        </aside>
         <main className="flex w-full flex-1 flex-col overflow-hidden">
           {children}
         </main>
