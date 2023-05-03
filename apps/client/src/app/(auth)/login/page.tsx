@@ -1,3 +1,4 @@
+import '@/lib/amplify/client'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import logo from '../../../../public/logo.svg'
