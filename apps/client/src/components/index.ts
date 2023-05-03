@@ -1,2 +1,5 @@
+export * from './Avatar'
+export * from './MainNav'
 export * from './SiteFooter'
 export * from './SiteHeader'
+export * from './UserAccountNav'
