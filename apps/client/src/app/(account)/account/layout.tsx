@@ -9,7 +9,7 @@ interface DashboardLayoutProps {
   children?: ReactNode
 }
 
-export default async function DashboardLayout({
+export default async function AccountLayout({
   children,
 }: DashboardLayoutProps) {
   const SSR = getAmplifyWithSSRContext()
@@ -34,7 +34,10 @@ export default async function DashboardLayout({
         </div>
       </header>
       <div className="mx-auto flex w-full max-w-7xl flex-1 px-4 lg:px-8">
-        {children}
+        <aside></aside>
+        <main className="flex w-full flex-1 flex-col overflow-hidden">
+          {children}
+        </main>
       </div>
       <SiteFooter />
     </div>
