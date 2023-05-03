@@ -61,7 +61,7 @@ export const MainNav = ({ items }: MainNavProps) => {
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-1"
           >
-            <Popover.Overlay className="fixed inset-0 bg-slate-300/50 opacity-100" />
+            <Popover.Overlay className="fixed inset-0 z-10 bg-slate-300/50 opacity-100" />
           </Transition>
           <Transition
             as={Fragment}
@@ -72,7 +72,7 @@ export const MainNav = ({ items }: MainNavProps) => {
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-1"
           >
-            <Popover.Panel className="absolute inset-x-4 top-full z-10 mt-2 flex origin-top scale-100 flex-col rounded-2xl bg-white p-4 text-lg tracking-tight text-slate-900 opacity-100 shadow-xl ring-1 ring-slate-900/5">
+            <Popover.Panel className="absolute inset-x-4 top-full z-20 mt-2 flex origin-top scale-100 flex-col rounded-2xl bg-white p-4 text-lg tracking-tight text-slate-900 opacity-100 shadow-xl ring-1 ring-slate-900/5">
               {items?.map((item, index) => (
                 <Link
                   key={index}

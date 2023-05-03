@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { getAmplifyWithSSRContext } from '@/lib'
 import { getCurrentUser } from '@/lib/session'
 import { notFound } from 'next/navigation'
-import { MainNav } from '@/components'
+import { MainNav, UserAccountNav } from '@/components'
 
 interface DashboardLayoutProps {
   children?: ReactNode
@@ -30,6 +30,7 @@ export default async function DashboardLayout({
               { href: '#', title: 'Test' },
             ]}
           />
+          <UserAccountNav user={currentUser} />
         </div>
       </header>
       <div className="mx-auto flex w-full max-w-7xl px-4 lg:px-8">
