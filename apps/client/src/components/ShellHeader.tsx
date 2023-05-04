@@ -6,7 +6,7 @@ interface ShellHeaderProps {
 export const ShellHeader = ({ heading, description }: ShellHeaderProps) => {
   return (
     <div>
-      <h1 className="text-3xl font-semibold leading-6 text-slate-900 md:text-4xl">
+      <h1 className="text-3xl font-semibold capitalize leading-6 text-slate-900 md:text-4xl">
         {heading}
       </h1>
       {description ? (
