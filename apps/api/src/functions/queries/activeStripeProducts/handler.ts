@@ -1,0 +1,41 @@
+import { AppSyncResolverEvent } from 'aws-lambda'
+import { StripeProduct } from '../../../appsync'
+import { HandlerDeps } from './types'
+
+export const buildHandler = async (
+  deps: HandlerDeps,
+  event: AppSyncResolverEvent<any>
+): Promise<StripeProduct[]> => {
+  const products = await deps.productsService.getActiveProducts()
+
+  const productsWithPrices = await Promise.all(
+    products.map(async (product) => {
+      const prices = await deps.productsService.getProductWithActivePrices(
+        product.productId
+      )
+
+      return {
+        ...product,
+        prices,
+      }
+    })
+  )
+
+  return productsWithPrices.map((product) => ({
+    id: product.productId,
+    active: product.active,
+    description: product.description,
+    image: product.image,
+    name: product.name,
+    prices: product.prices.map((price) => ({
+      id: price.priceId,
+      active: price.active,
+      currency: price.currency,
+      description: price.description,
+      interval: price.interval,
+      intervalCount: price.intervalCount,
+      type: price.type,
+      unitAmount: price.unitAmount,
+    })),
+  }))
+}

@@ -7,9 +7,8 @@ import {
 } from 'aws-cdk-lib/aws-appsync'
 import { UserPool } from 'aws-cdk-lib/aws-cognito'
 import { StringParameter } from 'aws-cdk-lib/aws-ssm'
-import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs'
-import { Runtime } from 'aws-cdk-lib/aws-lambda'
 import { Webhooks } from './webhooks'
+import { Stripe } from './stripe'
 
 interface AppStackProps extends StackProps {
   domain: string
@@ -50,16 +49,9 @@ export class ApiStack extends Stack {
 
     new Webhooks(this, props)
 
-    const handler = new NodejsFunction(this, 'test-handler', {
-      entry: './src/functions/queries/test/index.ts',
-      runtime: Runtime.NODEJS_18_X,
-    })
-
-    const testDS = api.addLambdaDataSource('testDS', handler)
-
-    testDS.createResolver('test-resolver', {
-      typeName: 'Query',
-      fieldName: 'test',
+    new Stripe(this, {
+      prefix: props.prefix,
+      api,
     })
   }
 }

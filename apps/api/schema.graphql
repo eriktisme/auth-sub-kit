@@ -1,7 +1,24 @@
-type Test @aws_cognito_user_pools @aws_iam {
-  id: ID!
+type Query {
+  activeStripeProducts: [StripeProduct!]! @aws_cognito_user_pools @aws_api_key @aws_iam
 }
 
-type Query {
-  test: Test @aws_cognito_user_pools @aws_iam
+type StripeProduct @aws_cognito_user_pools @aws_api_key @aws_iam {
+  id: ID!
+  active: Boolean!
+  name: String!
+  description: String
+  image: String
+  prices: [StripePrice!]!
+}
+
+type StripePrice @aws_cognito_user_pools @aws_api_key @aws_iam {
+  id: ID!
+  active: Boolean!
+  description: String
+  currency: String!
+  type: String!
+  unitAmount: Int!
+  interval: String
+  intervalCount: Int
+  trialPeriodDays: Int
 }

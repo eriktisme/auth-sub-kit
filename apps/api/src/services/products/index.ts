@@ -18,4 +18,12 @@ export class ProductsService {
   async upsertPrice(args: StripePrice): Promise<void> {
     await this.deps.pricesRepository.upsert(args)
   }
+
+  async getActiveProducts(): Promise<StripeProduct[]> {
+    return this.deps.productsRepository.getActive()
+  }
+
+  async getProductWithActivePrices(product: string): Promise<StripePrice[]> {
+    return this.deps.pricesRepository.getActiveByProduct(product)
+  }
 }

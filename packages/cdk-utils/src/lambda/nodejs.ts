@@ -32,10 +32,13 @@ export class NodejsLambda extends NodejsFunction {
   }
 
   grantDynamoDBTableReadWriteAccess(prefix: string, tableName: string) {
-    const table = Table.fromTableName(
+    const table = Table.fromTableAttributes(
       this,
       `${this.functionName}-table-${tableName}`,
-      `${prefix}.${tableName}`
+      {
+        tableName: `${prefix}.${tableName}`,
+        grantIndexPermissions: true,
+      }
     )
 
     table.grantReadWriteData(this)
@@ -44,10 +47,13 @@ export class NodejsLambda extends NodejsFunction {
   }
 
   grantDynamoDBTableReadAccess(prefix: string, tableName: string) {
-    const table = Table.fromTableName(
+    const table = Table.fromTableAttributes(
       this,
       `${this.functionName}-table-${tableName}`,
-      `${prefix}.${tableName}`
+      {
+        tableName: `${prefix}.${tableName}`,
+        grantIndexPermissions: true,
+      }
     )
 
     table.grantReadData(this)

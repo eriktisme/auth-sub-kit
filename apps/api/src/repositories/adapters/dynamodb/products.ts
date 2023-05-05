@@ -8,6 +8,10 @@ export class DynamoDBProductsRepository implements ProductsRepository {
     //
   }
 
+  async getActive(): Promise<StripeProduct[]> {
+    return this.dao.scan()
+  }
+
   async upsert(args: StripeProduct): Promise<StripeProduct> {
     await this.dao.put(args)
 
