@@ -71,6 +71,8 @@ jobs:
         with:
           main-branch-name: 'master'
 
+      - run: pnpm codegen
+
       - run: pnpm build
 
   lint:
@@ -103,6 +105,8 @@ jobs:
         with:
           main-branch-name: 'master'
 
+      - run: pnpm codegen
+
       - run: pnpm lint
 
   tests:
@@ -134,5 +138,7 @@ jobs:
       - uses: nrwl/nx-set-shas@v3
         with:
           main-branch-name: 'master'
+
+      - run: pnpm codegen
 
       - run: pnpm test -- --coverage
