@@ -1,10 +1,16 @@
-import { forwardRef, InputHTMLAttributes, ReactNode } from 'react'
+import {
+  forwardRef,
+  HTMLAttributes,
+  InputHTMLAttributes,
+  ReactNode,
+} from 'react'
 
 interface FormFieldProps extends InputHTMLAttributes<HTMLLabelElement> {
   label: ReactNode
   isRequired?: boolean
   description?: ReactNode
   hint?: ReactNode
+  error?: string
 }
 
 export const FormField = forwardRef<HTMLLabelElement, FormFieldProps>(
@@ -15,6 +21,7 @@ export const FormField = forwardRef<HTMLLabelElement, FormFieldProps>(
       isRequired = false,
       description,
       hint,
+      error,
       ...rest
     } = props
 
@@ -26,14 +33,17 @@ export const FormField = forwardRef<HTMLLabelElement, FormFieldProps>(
         ) : null}
         <div className="mt-2">{children}</div>
         {hint ? <FormFieldHint>{hint}</FormFieldHint> : null}
+        {error ? (
+          <FormFieldValidationMessage>{error}</FormFieldValidationMessage>
+        ) : null}
       </label>
     )
   }
 )
 
 export const FormFieldDescription = forwardRef<
-  HTMLDivElement,
-  InputHTMLAttributes<HTMLDivElement>
+  HTMLParagraphElement,
+  HTMLAttributes<HTMLParagraphElement>
 >((props, ref) => {
   return (
     <p className="my-2 text-sm text-slate-500" ref={ref}>
@@ -43,8 +53,8 @@ export const FormFieldDescription = forwardRef<
 })
 
 export const FormFieldHint = forwardRef<
-  HTMLDivElement,
-  InputHTMLAttributes<HTMLDivElement>
+  HTMLParagraphElement,
+  HTMLAttributes<HTMLParagraphElement>
 >((props, ref) => {
   return (
     <p className="mt-1 text-sm text-slate-500" ref={ref}>
@@ -53,7 +63,7 @@ export const FormFieldHint = forwardRef<
   )
 })
 
-interface FormFieldLabelProps extends InputHTMLAttributes<HTMLDivElement> {
+interface FormFieldLabelProps extends HTMLAttributes<HTMLDivElement> {
   isAstrixShown: boolean
 }
 
@@ -72,3 +82,10 @@ export const FormFieldLabel = forwardRef<HTMLDivElement, FormFieldLabelProps>(
     )
   }
 )
+
+export const FormFieldValidationMessage = forwardRef<
+  HTMLParagraphElement,
+  HTMLAttributes<HTMLParagraphElement>
+>((props, ref) => {
+  return <p className="mt-2 block text-sm text-red-600">{props.children}</p>
+})

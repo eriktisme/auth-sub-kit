@@ -9,11 +9,12 @@ interface TextInputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   hint?: ReactNode
   isInvalid?: boolean
   dataTestId?: string
+  error?: string
 }
 
 export const TextInputField = forwardRef<HTMLInputElement, TextInputFieldProps>(
   (props, ref) => {
-    const { label, isRequired, description, hint, ...rest } = props
+    const { label, isRequired, description, hint, error, ...rest } = props
 
     return (
       <FormField
@@ -21,6 +22,7 @@ export const TextInputField = forwardRef<HTMLInputElement, TextInputFieldProps>(
         isRequired={isRequired}
         description={description}
         hint={hint}
+        error={error}
       >
         <TextInput required={isRequired} {...rest} ref={ref} />
       </FormField>

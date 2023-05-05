@@ -1,5 +1,6 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib'
+import { Spinner } from './Spinner'
 
 type ButtonAppearance = 'default'
 
@@ -30,13 +31,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         className={cn(
-          'rounded-md px-4 py-2 text-sm font-semibold shadow-sm',
-          ...appearances[appearance]
+          'flex flex-row items-center rounded-md px-4 py-2 text-sm font-semibold shadow-sm',
+          ...appearances[appearance],
+          isDisabled || isLoading ? 'cursor-not-allowed opacity-50' : null
         )}
         disabled={isDisabled || isLoading}
         {...rest}
         ref={ref}
       >
+        {isLoading ? (
+          <Spinner size="small" appearance={appearance} className="mr-2" />
+        ) : null}
         {children}
       </button>
     )

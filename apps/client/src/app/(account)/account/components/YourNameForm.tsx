@@ -31,7 +31,11 @@ type FormData = z.infer<typeof YourNameFormSchema>
 export const YourNameForm = ({ user }: YourNameFormProps) => {
   const router = useRouter()
 
-  const { handleSubmit, register } = useForm<FormData>({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: zodResolver(YourNameFormSchema),
     defaultValues: {
       firstName: user.firstName,
@@ -64,8 +68,18 @@ export const YourNameForm = ({ user }: YourNameFormProps) => {
         />
         <CardBody>
           <div className="grid gap-4 md:grid-cols-2">
-            <TextInputField label="First name" {...register('firstName')} />
-            <TextInputField label="Last name" {...register('lastName')} />
+            <TextInputField
+              label="First name"
+              {...register('firstName')}
+              isInvalid={!errors?.firstName}
+              error={errors?.firstName?.message}
+            />
+            <TextInputField
+              label="Last name"
+              {...register('lastName')}
+              isInvalid={!errors?.lastName}
+              error={errors?.lastName?.message}
+            />
           </div>
         </CardBody>
         <CardFooter>
