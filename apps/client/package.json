@@ -1,7 +1,6 @@
 {
   "name": "@auth-sub-kit/client",
   "scripts": {
-    "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
     "preview": "next build && next start",
