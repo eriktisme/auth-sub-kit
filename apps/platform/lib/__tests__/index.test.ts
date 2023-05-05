@@ -8,6 +8,22 @@ const stack = new PlatformStack(new App(), 'platform-stack', {
 
 const template = Template.fromStack(stack)
 
-describe.skip('PlatformStack', () => {
-  //
+describe('PlatformStack', () => {
+  it('should configure event bus', () => {
+    template.hasResourceProperties('AWS::Events::EventBus', {
+      //
+    })
+  })
+
+  it('should configure stripe products table', () => {
+    template.hasResourceProperties('AWS::DynamoDB::Table', {
+      TableName: 'prod.AuthSubKitStripeProducts',
+    })
+  })
+
+  it('should configure stripe products table', () => {
+    template.hasResourceProperties('AWS::DynamoDB::Table', {
+      TableName: 'prod.AuthSubKitStripePrices',
+    })
+  })
 })
