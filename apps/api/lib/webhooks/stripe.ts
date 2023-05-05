@@ -25,9 +25,19 @@ export class StripeWebhook extends Construct {
     const handler = new NodejsLambda(this, 'handler', {
       entry: './src/functions/webhooks/stripe/index.ts',
       environment: {
+        PREFIX: props.prefix,
         STRIPE_WEBHOOK_TOKEN_ID: stripeWebhookToken.secretName,
       },
     })
+
+    handler.grantDynamoDBTableReadWriteAccess(
+      props.prefix,
+      'AuthSubKitStripeProducts'
+    )
+    handler.grantDynamoDBTableReadWriteAccess(
+      props.prefix,
+      'AuthSubKitStripePrices'
+    )
 
     stripeWebhookToken.grantRead(handler)
 

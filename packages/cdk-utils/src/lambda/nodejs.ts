@@ -7,6 +7,7 @@ import { Construct } from 'constructs'
 import { RetentionDays } from 'aws-cdk-lib/aws-logs'
 import { Architecture, Runtime } from 'aws-cdk-lib/aws-lambda'
 import { Duration } from 'aws-cdk-lib'
+import { Table } from 'aws-cdk-lib/aws-dynamodb'
 
 export class NodejsLambda extends NodejsFunction {
   constructor(scope: Construct, id: string, props: NodejsFunctionProps) {
@@ -28,5 +29,29 @@ export class NodejsLambda extends NodejsFunction {
         banner: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
       },
     })
+  }
+
+  grantDynamoDBTableReadWriteAccess(prefix: string, tableName: string) {
+    const table = Table.fromTableName(
+      this,
+      `${this.functionName}-table-${tableName}`,
+      `${prefix}.${tableName}`
+    )
+
+    table.grantReadWriteData(this)
+
+    return this
+  }
+
+  grantDynamoDBTableReadAccess(prefix: string, tableName: string) {
+    const table = Table.fromTableName(
+      this,
+      `${this.functionName}-table-${tableName}`,
+      `${prefix}.${tableName}`
+    )
+
+    table.grantReadData(this)
+
+    return this
   }
 }

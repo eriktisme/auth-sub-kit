@@ -7,9 +7,13 @@
     "test:cdk": "jest --passWithNoTests"
   },
   "dependencies": {
-    "@auth-sub-kit/platform": "workspace:*",
     "@auth-sub-kit/cdk-utils": "workspace:*",
+    "@auth-sub-kit/platform": "workspace:*",
+    "@aws-sdk/client-dynamodb": "^3.327.0",
     "@aws-sdk/client-secrets-manager": "^3.327.0",
+    "@aws-sdk/lib-dynamodb": "^3.327.0",
+    "@aws-sdk/util-dynamodb": "^3.327.0",
+    "@aws-sdk/node-http-handler": "^3.321.1",
     "stripe": "^12.4.0",
     "zod": "^3.21.4"
   },

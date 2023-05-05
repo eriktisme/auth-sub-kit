@@ -1,24 +1,21 @@
-import { z } from 'zod'
-import { StripeProductSchema, StripePriceSchema } from '../../domain'
+import { StripeProduct, StripePrice } from '../../domain'
+import { PricesRepository, ProductsRepository } from '../../repositories'
 
 interface ProductsServiceDeps {
-  //
+  productsRepository: ProductsRepository
+  pricesRepository: PricesRepository
 }
-
-type UpsertProductArgs = Omit<z.infer<typeof StripeProductSchema>, 'prices'>
-
-type AttachPriceArgs = z.infer<typeof StripePriceSchema>
 
 export class ProductsService {
   constructor(protected deps: ProductsServiceDeps) {
     //
   }
 
-  upsert(args: UpsertProductArgs): Promise<void> {
-    return Promise.resolve()
+  async upsert(args: StripeProduct): Promise<void> {
+    await this.deps.productsRepository.upsert(args)
   }
 
-  upsertPrice(args: AttachPriceArgs): Promise<void> {
-    return Promise.resolve()
+  async upsertPrice(args: StripePrice): Promise<void> {
+    await this.deps.pricesRepository.upsert(args)
   }
 }

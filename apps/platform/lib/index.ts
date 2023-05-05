@@ -30,7 +30,7 @@ export class PlatformStack extends Stack {
       },
     })
 
-    new Table(this, 'platform-stripe-products', {
+    new Table(this, 'platform-stripe-prices', {
       tableName: `${props.prefix}.AuthSubKitStripePrices`,
       hashKey: {
         name: 'priceId',

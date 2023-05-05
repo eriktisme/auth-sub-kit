@@ -1,7 +1,7 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResult } from 'aws-lambda'
 import Stripe from 'stripe'
 import { HandlerDeps } from './types'
-import { StripeProductSchema, StripeProductEventSchema } from '../../../domain'
+import { StripeProductSchema, StripePriceSchema } from '../../../domain'
 
 export const buildHandler = async (
   deps: HandlerDeps,
@@ -40,7 +40,7 @@ export const buildHandler = async (
         const price = stripeEvent.data.object as Stripe.Price
 
         await deps.productsService.upsertPrice(
-          StripeProductEventSchema.parse({
+          StripePriceSchema.parse({
             productId: price.product as string,
             description: price.nickname ?? undefined,
             interval: price.recurring?.interval ?? undefined,

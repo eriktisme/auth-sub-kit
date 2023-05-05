@@ -14,6 +14,8 @@ export const StripePriceSchema = z.object({
   metadata: z.record(any()).optional(),
 })
 
+export type StripePrice = z.infer<typeof StripePriceSchema>
+
 export const StripeProductSchema = z.object({
   productId: z.string(),
   active: z.boolean(),
@@ -22,3 +24,5 @@ export const StripeProductSchema = z.object({
   image: z.string().optional(),
   metadata: z.record(any()).optional(),
 })
+
+export type StripeProduct = z.infer<typeof StripeProductSchema>
