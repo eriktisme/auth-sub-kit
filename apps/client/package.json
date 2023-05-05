@@ -13,6 +13,7 @@
   "dependencies": {
     "@headlessui/react": "1.7.14",
     "@heroicons/react": "2.0.17",
+    "@hookform/resolvers": "3.1.0",
     "@sentry/nextjs": "^7.50.0",
     "aws-amplify": "^5.1.4",
     "aws-crt": "^1.15.15",
@@ -21,6 +22,7 @@
     "next": "13.3.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "7.43.9",
     "zod": "^3.21.4"
   },
   "devDependencies": {

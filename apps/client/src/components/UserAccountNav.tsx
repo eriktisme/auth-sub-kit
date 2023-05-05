@@ -41,7 +41,7 @@ export const UserAccountNav = ({ user }: UserAccountNavProps) => {
           <Menu.Item key="settings">
             {({ active }) => (
               <Link
-                href="/dashboard/settings"
+                href="/account"
                 className={[
                   active ? 'bg-gray-100' : '',
                   'block px-4 py-2  text-gray-700',
