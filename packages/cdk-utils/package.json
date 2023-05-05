@@ -1,0 +1,13 @@
+{
+  "name": "@auth-sub-kit/cdk-utils",
+  "private": true,
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --passWithNoTests"
+  }
+}

@@ -13,6 +13,8 @@ permissions:
 
 env:
   CI: true
+  CACHE_BUILD_ARTEFACTS_NAME: 'cache-build-artefacts'
+  CACHE_BUILD_ARTEFACTS_PATH: packages/**/dist
   NEXT_PUBLIC_API: ''
   NEXT_PUBLIC_PREFIX: 'test'
   NEXT_PUBLIC_COGNITO_USER_POOL_ID: ''
@@ -45,6 +47,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - uses: pnpm/action-setup@v2
         with:
@@ -57,6 +61,15 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+
+      - uses: actions/cache@v3
+        with:
+          path: ${{ env.CACHE_BUILD_ARTEFACTS_PATH }}
+          key: ${{ runner.os }}-build-${{ env.CACHE_BUILD_ARTEFACTS_NAME }}-${{ github.run_id }}
+
+      - uses: nrwl/nx-set-shas@v3
+        with:
+          main-branch-name: 'master'
 
       - run: pnpm build
 
@@ -66,6 +79,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - uses: pnpm/action-setup@v2
         with:
@@ -78,6 +93,15 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+
+      - uses: actions/cache@v3
+        with:
+          path: ${{ env.CACHE_BUILD_ARTEFACTS_PATH }}
+          key: ${{ runner.os }}-build-${{ env.CACHE_BUILD_ARTEFACTS_NAME }}-${{ github.run_id }}
+
+      - uses: nrwl/nx-set-shas@v3
+        with:
+          main-branch-name: 'master'
 
       - run: pnpm lint
 
@@ -87,6 +111,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - uses: pnpm/action-setup@v2
         with:
@@ -99,5 +125,14 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+
+      - uses: actions/cache@v3
+        with:
+          path: ${{ env.CACHE_BUILD_ARTEFACTS_PATH }}
+          key: ${{ runner.os }}-build-${{ env.CACHE_BUILD_ARTEFACTS_NAME }}-${{ github.run_id }}
+
+      - uses: nrwl/nx-set-shas@v3
+        with:
+          main-branch-name: 'master'
 
       - run: pnpm test -- --coverage
