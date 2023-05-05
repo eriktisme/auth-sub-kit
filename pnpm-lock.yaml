@@ -70,12 +70,12 @@ importers:
 
   apps/api:
     dependencies:
-      '@auth-sub-kit/api':
-        specifier: workspace:*
-        version: 'link:'
       '@auth-sub-kit/cdk-utils':
         specifier: workspace:*
         version: link:../../packages/cdk-utils
+      '@auth-sub-kit/platform':
+        specifier: workspace:*
+        version: link:../platform
       '@aws-sdk/client-secrets-manager':
         specifier: 3.327.0
         version: 3.327.0
@@ -173,6 +173,12 @@ importers:
       vercel:
         specifier: ^29.0.3
         version: 29.0.3(@types/node@18.16.3)(encoding@0.1.13)(ts-node@10.9.1)
+
+  apps/platform:
+    dependencies:
+      '@auth-sub-kit/cdk-utils':
+        specifier: workspace:*
+        version: link:../../packages/cdk-utils
 
   packages/cdk-utils: {}
 
