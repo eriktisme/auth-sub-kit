@@ -77,10 +77,10 @@ importers:
         specifier: workspace:*
         version: link:../platform
       '@aws-sdk/client-secrets-manager':
-        specifier: 3.327.0
+        specifier: ^3.327.0
         version: 3.327.0
       stripe:
-        specifier: 12.4.0
+        specifier: ^12.4.0
         version: 12.4.0
       zod:
         specifier: ^3.21.4

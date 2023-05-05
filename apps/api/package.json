@@ -9,8 +9,8 @@
   "dependencies": {
     "@auth-sub-kit/platform": "workspace:*",
     "@auth-sub-kit/cdk-utils": "workspace:*",
-    "@aws-sdk/client-secrets-manager": "3.327.0",
-    "stripe": "12.4.0",
+    "@aws-sdk/client-secrets-manager": "^3.327.0",
+    "stripe": "^12.4.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
