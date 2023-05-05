@@ -9,6 +9,7 @@ import { UserPool } from 'aws-cdk-lib/aws-cognito'
 import { StringParameter } from 'aws-cdk-lib/aws-ssm'
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs'
 import { Runtime } from 'aws-cdk-lib/aws-lambda'
+import { Webhooks } from './webhooks'
 
 interface AppStackProps extends StackProps {
   domain: string
@@ -46,6 +47,8 @@ export class ApiStack extends Stack {
         ],
       },
     })
+
+    new Webhooks(this, props)
 
     const handler = new NodejsFunction(this, 'test-handler', {
       entry: './src/functions/queries/test/index.ts',
