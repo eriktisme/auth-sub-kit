@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, ReactNode } from 'react'
 
 export const Card = ({ children }: PropsWithChildren) => {
   return <div className="overflow-hidden rounded-lg bg-white">{children}</div>
@@ -10,7 +10,7 @@ export const CardBody = ({ children }: PropsWithChildren) => {
 
 interface CardHeaderProps {
   heading: string
-  description?: string
+  description?: ReactNode
 }
 
 export const CardHeader = ({ heading, description }: CardHeaderProps) => {

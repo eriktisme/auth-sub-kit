@@ -5,4 +5,5 @@ cdk_out
 pnpm-lock.yaml
 .next
 out
-server/appsync.ts
+apps/api/src/appsync.ts
+apps/client/src/appsync.ts
