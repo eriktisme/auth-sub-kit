@@ -14,6 +14,15 @@ const config: CodegenConfig = {
         },
       },
     },
+    './apps/client/src/appsync.ts': {
+      plugins: ['typescript'],
+      config: {
+        useTypeImports: true,
+        skipTypename: false,
+        preResolveTypes: true,
+        dedupeOperationSuffix: true,
+      },
+    },
   },
 }
 

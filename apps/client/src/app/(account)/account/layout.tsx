@@ -48,7 +48,7 @@ export default async function AccountLayout({
             ]}
           />
         </aside>
-        <main className="flex w-full flex-1 flex-col overflow-hidden">
+        <main className="flex w-full flex-1 flex-col overflow-hidden px-1">
           {children}
         </main>
       </div>

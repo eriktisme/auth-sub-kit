@@ -21,6 +21,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       isDisabled = false,
       isLoading = false,
       type = 'button',
+      className,
       ...rest
     } = props
 
@@ -33,7 +34,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           'flex flex-row items-center rounded-md px-4 py-2 text-sm font-semibold shadow-sm',
           ...appearances[appearance],
-          isDisabled || isLoading ? 'cursor-not-allowed opacity-50' : null
+          isDisabled || isLoading ? 'cursor-not-allowed opacity-50' : null,
+          className
         )}
         disabled={isDisabled || isLoading}
         {...rest}

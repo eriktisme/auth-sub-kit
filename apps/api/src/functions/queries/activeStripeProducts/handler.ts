@@ -21,7 +21,7 @@ export const buildHandler = async (
     })
   )
 
-  return productsWithPrices.map((product) => ({
+  return productsWithPrices.reverse().map((product) => ({
     id: product.productId,
     active: product.active,
     description: product.description,
