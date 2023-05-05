@@ -1,0 +1,72 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+
+env:
+  CI: true
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  DOMAIN: auth-sub-kit.erikvandam.dev
+
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+
+jobs:
+  dependencies:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.1.0
+          run_install: false
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+  deploy:
+    needs: [dependencies]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.1.0
+          run_install: false
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_PROD_ACCOUNT_ID }}:role/auth-sub-kit-deploy-role
+          aws-region: eu-west-1
+
+      - name: Deploy AWS Resources
+        run: pnpm cdk -- "deploy --context prefix=prod --context domain=${{ env.DOMAIN }} --context clientId=${{ secrets.GOOGLE_CLIENT_ID }} --context clientSecret=${{ secrets.GOOGLE_CLIENT_SECRET }} --require-approval never"
+
+      - name: Pull Vercel Environment Information
+        run: pnpm vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Vercel Resources
+        run: pnpm vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}

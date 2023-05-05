@@ -2,13 +2,13 @@
   "name": "@auth-sub-kit/client",
   "scripts": {
     "build": "next build",
-    "cdk": "cdk",
     "dev": "next dev",
     "lint": "next lint",
     "preview": "next build && next start",
     "start": "next start",
     "test": "concurrently \"pnpm test:app\"",
-    "test:app": "jest --passWithNoTests"
+    "test:app": "jest --passWithNoTests",
+    "vercel": "vercel"
   },
   "dependencies": {
     "@headlessui/react": "1.7.14",
