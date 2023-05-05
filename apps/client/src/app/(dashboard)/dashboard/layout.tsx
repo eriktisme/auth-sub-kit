@@ -1,7 +1,7 @@
 import '@/lib/amplify/client'
 import { ReactNode } from 'react'
-import { getAmplifyWithSSRContext } from '@/lib'
-import { getCurrentUser } from '@/lib/session'
+import { getAmplifyWithSSRContext } from '@/lib/amplify/ssr'
+import { getCurrentUser } from '@/lib'
 import { notFound } from 'next/navigation'
 import { MainNav, SiteFooter, UserAccountNav } from '@/components'
 

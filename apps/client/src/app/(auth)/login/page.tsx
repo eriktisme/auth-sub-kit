@@ -3,8 +3,8 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import logo from '../../../../public/logo.svg'
 import { SocialLoginForm } from './components/SocialLoginForm'
-import { getAmplifyWithSSRContext } from '@/lib'
-import { getCurrentUser } from '@/lib/session'
+import { getAmplifyWithSSRContext } from '@/lib/amplify/ssr'
+import { getCurrentUser } from '@/lib'
 import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {

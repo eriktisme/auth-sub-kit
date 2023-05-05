@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 import { Shell, ShellHeader } from '@/components'
 import { YourNameForm } from './components'
-import { getAmplifyWithSSRContext } from '@/lib'
-import { getCurrentUser } from '@/lib/session'
+import { getAmplifyWithSSRContext } from '@/lib/amplify/ssr'
+import { getCurrentUser } from '@/lib'
 import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {

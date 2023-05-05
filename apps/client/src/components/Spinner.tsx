@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib'
 import { HTMLAttributes } from 'react'
 
 type SpinnerSize = 'tiny' | 'small' | 'medium' | 'large'

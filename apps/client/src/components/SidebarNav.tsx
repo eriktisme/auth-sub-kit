@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react'
 import Link from 'next/link'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib'
 import { usePathname } from 'next/navigation'
 
 interface NavItem {
