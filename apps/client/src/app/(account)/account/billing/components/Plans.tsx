@@ -27,7 +27,7 @@ export const Plans = ({ products }: PlansProps) => {
     setIsLoadingPrice(price.id)
 
     try {
-      const { data } = await API.graphql({
+      const result = await API.graphql({
         query: gql`
           mutation CreateStripeCheckoutSessionMutation(
             $input: CreateStripeCheckoutSessionInput
@@ -51,7 +51,7 @@ export const Plans = ({ products }: PlansProps) => {
       )
 
       stripe?.redirectToCheckout({
-        sessionId: data.createStripeCheckoutSession?.sessionId,
+        sessionId: (result as any).data.createStripeCheckoutSession?.sessionId!,
       })
     } catch (e) {
       console.error('Failed checkout out stripe', e)
