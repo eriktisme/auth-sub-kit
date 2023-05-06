@@ -14,6 +14,18 @@ export class DynamoDBCustomersRepository implements CustomersRepository {
     })
   }
 
+  async getByEmail(email: string): Promise<StripeCustomer> {
+    const customer = await this.dao.query({
+      index: 'email',
+      keyConditionExpression: `email = :email`,
+      expressionValues: {
+        ':email': email,
+      },
+    })
+
+    return customer[0]!
+  }
+
   async store(args: StoreCustomerArgs): Promise<StripeCustomer> {
     const data = {
       ...args,

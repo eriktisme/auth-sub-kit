@@ -9,6 +9,7 @@ import { UserPool } from 'aws-cdk-lib/aws-cognito'
 import { StringParameter } from 'aws-cdk-lib/aws-ssm'
 import { Webhooks } from './webhooks'
 import { Stripe } from './stripe'
+import { Secret } from 'aws-cdk-lib/aws-secretsmanager'
 
 interface AppStackProps extends StackProps {
   domain: string
@@ -47,12 +48,20 @@ export class ApiStack extends Stack {
       },
     })
 
-    new Webhooks(this, props)
+    const stripeApiToken = new Secret(this, 'stripe-api-token', {
+      secretName: `${props.prefix}.AuthSubKitStripeApiSecretToken`,
+    })
+
+    new Webhooks(this, {
+      prefix: props.prefix,
+      stripeApiToken,
+    })
 
     new Stripe(this, {
       api,
       domain: props.domain,
       prefix: props.prefix,
+      stripeApiToken,
     })
   }
 }

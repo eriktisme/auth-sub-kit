@@ -8,20 +8,18 @@ interface StripeProps {
   api: GraphqlApi
   domain: string
   prefix: string
+  stripeApiToken: Secret
 }
 
 export class Stripe extends Construct {
   constructor(scope: Construct, props: StripeProps) {
     super(scope, 'stripe')
-    const stripeApiToken = new Secret(this, 'stripe-api-token', {
-      secretName: `${props.prefix}.AuthSubKitStripeApiToken`,
-    })
 
     new ActiveProducts(this, props)
 
     new CreateCheckoutSession(this, {
       ...props,
-      stripeApiToken,
+      stripeApiToken: props.stripeApiToken,
     })
   }
 }

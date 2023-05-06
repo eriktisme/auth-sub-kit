@@ -1,7 +1,11 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResult } from 'aws-lambda'
 import Stripe from 'stripe'
 import { HandlerDeps } from './types'
-import { StripeProductSchema, StripePriceSchema } from '../../../domain'
+import {
+  StripeProductSchema,
+  StripePriceSchema,
+  StripeSubscriptionSchema,
+} from '../../../domain'
 
 export const buildHandler = async (
   deps: HandlerDeps,
@@ -10,9 +14,7 @@ export const buildHandler = async (
   let statusCode = 200
 
   try {
-    const stripeEvent: Stripe.Event = new Stripe('', {
-      apiVersion: '2022-11-15',
-    }).webhooks.constructEvent(
+    const stripeEvent: Stripe.Event = deps.stripe.webhooks.constructEvent(
       event.body!,
       event.headers['stripe-signature']!,
       deps.stripeWebhookToken
@@ -56,6 +58,37 @@ export const buildHandler = async (
         )
 
         break
+      case 'checkout.session.completed':
+        const checkout = stripeEvent.data.object as Stripe.Checkout
+
+        const subscription = await deps.stripe.subscriptions.retrieve(
+          checkout.subscription
+        )
+
+        const customer = await deps.customersService.get(
+          checkout.customer_details.email
+        )
+
+        await deps.subscriptionsService.upsert(
+          StripeSubscriptionSchema.parse({
+            cancelAtPeriodEnd: subscription.cancel_at_period_end
+              ? new Date(subscription.cancel_at_period_end * 1000).toISOString()
+              : undefined,
+            canceledAt: subscription.canceled_at
+              ? new Date(subscription.canceled_at * 1000).toISOString()
+              : undefined,
+            currentPeriodEnd: subscription.current_period_end
+              ? new Date(subscription.current_period_end * 1000).toISOString()
+              : undefined,
+            endedAt: subscription.ended_at
+              ? new Date(subscription.ended_at * 1000).toISOString()
+              : undefined,
+            productId: subscription.customer,
+            status: subscription.status,
+            subscriptionId: subscription.id,
+            userId: customer.userId,
+          })
+        )
     }
   } catch (err) {
     console.error('Failed to construct stripe event', {

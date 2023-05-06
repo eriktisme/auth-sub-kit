@@ -36,6 +36,13 @@ export class PlatformStack extends Stack {
             type: AttributeType.STRING,
           },
         },
+        {
+          name: 'email',
+          hashKey: {
+            name: 'email',
+            type: AttributeType.STRING,
+          },
+        },
       ],
     })
 
@@ -62,6 +69,23 @@ export class PlatformStack extends Stack {
           name: 'product',
           hashKey: {
             name: 'productId',
+            type: AttributeType.STRING,
+          },
+        },
+      ],
+    })
+
+    new Table(this, 'platform-stripe-subscriptions', {
+      tableName: `${props.prefix}.AuthSubKitStripeSubscriptions`,
+      hashKey: {
+        name: 'userId',
+        type: AttributeType.STRING,
+      },
+      gsi: [
+        {
+          name: 'subscription',
+          hashKey: {
+            name: 'subscriptionId',
             type: AttributeType.STRING,
           },
         },

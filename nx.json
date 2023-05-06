@@ -9,7 +9,7 @@
   },
   "targetDefaults": {
     "cdk": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build", "^cdk"]
     }
   },
   "defaultBase": "master"
