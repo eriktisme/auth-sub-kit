@@ -23,6 +23,10 @@ export class CustomersService {
     //
   }
 
+  async get(email: string): Promise<StripeCustomer> {
+    return await this.deps.internalCustomersRepository.getByEmail(email)
+  }
+
   async createOrRetrieve(args: CreateOrRetrieveArgs): Promise<StripeCustomer> {
     let customer = await this.deps.internalCustomersRepository.get(args.userId)
 

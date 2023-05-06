@@ -6,12 +6,15 @@ import {
   PriceModel,
   ProductKey,
   ProductModel,
+  SubscriptionKey,
+  SubscriptionModel,
 } from './models'
 import { config } from '../../../config'
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 import { DynamoDBPricesRepository } from './prices'
 import { DynamoDBDao } from './dao'
 import { DynamoDBCustomersRepository } from './customers'
+import { DynamoDBSubscriptionsRepository } from './subscriptions'
 
 export * from './models'
 export * from './prices'
@@ -43,6 +46,17 @@ export function buildDynamoDBCustomersRepository(
   return new DynamoDBCustomersRepository(
     new DynamoDBDao<CustomerModel, CustomerKey>({
       table: `${config.prefix}.AuthSubKitStripeCustomers`,
+      client,
+    })
+  )
+}
+
+export function buildDynamoDBSubscriptionsRepository(
+  client: DynamoDBDocumentClient
+) {
+  return new DynamoDBSubscriptionsRepository(
+    new DynamoDBDao<SubscriptionModel, SubscriptionKey>({
+      table: `${config.prefix}.AuthSubKitStripeSubscriptions`,
       client,
     })
   )

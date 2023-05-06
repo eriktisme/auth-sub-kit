@@ -12,6 +12,7 @@ import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-al
 
 interface StripeWebhookProps {
   prefix: string
+  stripeApiToken: Secret
 }
 
 export class StripeWebhook extends Construct {
@@ -27,6 +28,7 @@ export class StripeWebhook extends Construct {
       environment: {
         PREFIX: props.prefix,
         STRIPE_WEBHOOK_TOKEN_ID: stripeWebhookToken.secretName,
+        STRIPE_API_TOKEN_ID: props.stripeApiToken.secretName,
       },
     })
 
@@ -34,10 +36,23 @@ export class StripeWebhook extends Construct {
       props.prefix,
       'AuthSubKitStripeProducts'
     )
+
     handler.grantDynamoDBTableReadWriteAccess(
       props.prefix,
       'AuthSubKitStripePrices'
     )
+
+    handler.grantDynamoDBTableReadWriteAccess(
+      props.prefix,
+      'AuthSubKitStripeCustomers'
+    )
+
+    handler.grantDynamoDBTableReadWriteAccess(
+      props.prefix,
+      'AuthSubKitStripeSubscriptions'
+    )
+
+    props.stripeApiToken.grantRead(handler)
 
     stripeWebhookToken.grantRead(handler)
 

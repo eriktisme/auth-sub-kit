@@ -34,3 +34,18 @@ export const StripeCustomerSchema = z.object({
 })
 
 export type StripeCustomer = z.infer<typeof StripeCustomerSchema>
+
+export const StripeSubscriptionSchema = z.object({
+  subscriptionId: z.string(),
+  userId: z.string(),
+  productId: z.string(),
+  priceId: z.string(),
+  canceledAt: z.string().optional(),
+  status: z.string(),
+  cancelAtPeriodEnd: z.string().optional(),
+  currentPeriodEnd: z.string(),
+  startedAt: z.string(),
+  endedAt: z.string().optional(),
+})
+
+export type StripeSubscription = z.infer<typeof StripeSubscriptionSchema>
