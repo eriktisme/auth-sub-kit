@@ -34,3 +34,7 @@ export interface QueryParams extends BaseInput {
   expressionValues?: Record<string, NativeAttributeValue>
   consistentRead?: boolean
 }
+
+export interface GetItemOptions {
+  consistentRead: boolean
+}

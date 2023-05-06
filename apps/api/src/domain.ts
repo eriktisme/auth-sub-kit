@@ -26,3 +26,11 @@ export const StripeProductSchema = z.object({
 })
 
 export type StripeProduct = z.infer<typeof StripeProductSchema>
+
+export const StripeCustomerSchema = z.object({
+  customerId: z.string(),
+  email: z.string().email(),
+  userId: z.string(),
+})
+
+export type StripeCustomer = z.infer<typeof StripeCustomerSchema>

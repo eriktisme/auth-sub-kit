@@ -1,9 +1,14 @@
-import { PutCommand, QueryCommand, ScanCommand } from '@aws-sdk/lib-dynamodb'
+import {
+  GetCommand,
+  PutCommand,
+  QueryCommand,
+  ScanCommand,
+} from '@aws-sdk/lib-dynamodb'
 import {
   DynamoDBDaoDeps,
+  GetItemOptions,
   PutOptions,
   QueryParams,
-  QueryResponse,
   ScanInput,
 } from './types'
 
@@ -13,6 +18,18 @@ export class DynamoDBDao<
 > {
   constructor(protected deps: DynamoDBDaoDeps) {
     //
+  }
+
+  async get(key: TKeySchema, options?: GetItemOptions): Promise<TModel | null> {
+    const { Item } = await this.deps.client.send(
+      new GetCommand({
+        TableName: this.deps.table,
+        Key: key,
+        ConsistentRead: options?.consistentRead,
+      })
+    )
+
+    return Item as TModel
   }
 
   async put(data: TModel, options: PutOptions = {}): Promise<TModel> {
@@ -29,19 +46,6 @@ export class DynamoDBDao<
     return data
   }
 
-  async scan(input: ScanInput = {}): Promise<TModel[]> {
-    const { Items } = await this.deps.client.send(
-      new ScanCommand({
-        TableName: this.deps.table,
-        ExpressionAttributeNames: input.attributeNames,
-        ExpressionAttributeValues: input.attributeValues,
-        ConsistentRead: input.consistentRead,
-      })
-    )
-
-    return Items as TModel[]
-  }
-
   async query(params: QueryParams): Promise<TModel[]> {
     const { Items } = await this.deps.client.send(
       new QueryCommand({
@@ -53,6 +57,19 @@ export class DynamoDBDao<
         ExpressionAttributeNames: params.expressionNames,
         ExpressionAttributeValues: params.expressionValues,
         ConsistentRead: params.consistentRead,
+      })
+    )
+
+    return Items as TModel[]
+  }
+
+  async scan(input: ScanInput = {}): Promise<TModel[]> {
+    const { Items } = await this.deps.client.send(
+      new ScanCommand({
+        TableName: this.deps.table,
+        ExpressionAttributeNames: input.attributeNames,
+        ExpressionAttributeValues: input.attributeValues,
+        ConsistentRead: input.consistentRead,
       })
     )
 

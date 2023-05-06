@@ -1,4 +1,4 @@
-import { AppSyncResolverEvent } from 'aws-lambda'
+import { AppSyncResolverEvent, AppSyncIdentityCognito } from 'aws-lambda'
 import {
   CreateStripeCheckoutSessionInput,
   CreateStripeCheckoutSessionResponse,
@@ -11,10 +11,15 @@ export const buildHandler = async (
     input: CreateStripeCheckoutSessionInput
   }>
 ): Promise<CreateStripeCheckoutSessionResponse> => {
-  // TODO: Create customer
+  const identity = event.identity as AppSyncIdentityCognito
+
+  const { customerId } = await deps.customersService.createOrRetrieve({
+    email: identity.claims['email'],
+    userId: identity.sub,
+  })
 
   const { sessionId } = await deps.checkoutService.createSession({
-    customerId: '',
+    customerId,
     metadata: {},
     priceId: event.arguments.input.price.id,
     quantity: event.arguments.input.quantity ?? 1,

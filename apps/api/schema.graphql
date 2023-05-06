@@ -8,10 +8,10 @@ type Query {
 type Mutation {
   createStripeCheckoutSession(
     input: CreateStripeCheckoutSessionInput
-  ): CreateStripeCheckoutSessionResponse @aws_cognito_user_pools @aws_iam
+  ): CreateStripeCheckoutSessionResponse @aws_cognito_user_pools
 }
 
-type CreateStripeCheckoutSessionResponse @aws_cognito_user_pools @aws_iam {
+type CreateStripeCheckoutSessionResponse @aws_cognito_user_pools {
   sessionId: String!
 }
 
