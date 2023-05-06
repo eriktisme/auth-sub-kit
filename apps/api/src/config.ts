@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const configSchema = z.object({
-  domain: z.string(),
+  domain: z.string().optional(),
   prefix: z.string(),
   stripeApiToken: z.string().optional(),
   stripeWebhookTokenId: z.string().optional(),

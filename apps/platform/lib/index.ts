@@ -22,6 +22,23 @@ export class PlatformStack extends Stack {
       stringValue: bus.eventBusName,
     })
 
+    new Table(this, 'platform-stripe-customers', {
+      tableName: `${props.prefix}.AuthSubKitStripeCustomers`,
+      hashKey: {
+        name: 'userId',
+        type: AttributeType.STRING,
+      },
+      gsi: [
+        {
+          name: 'customer',
+          hashKey: {
+            name: 'customerId',
+            type: AttributeType.STRING,
+          },
+        },
+      ],
+    })
+
     new Table(this, 'platform-stripe-products', {
       tableName: `${props.prefix}.AuthSubKitStripeProducts`,
       hashKey: {

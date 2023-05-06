@@ -1,5 +1,6 @@
 'use client'
 
+import '@/lib/amplify/client'
 import { Switch } from '@headlessui/react'
 import { StripePrice, StripeProduct } from '@/appsync'
 import { useState } from 'react'
@@ -7,12 +8,12 @@ import { Button, Card, CardBody, CardFooter, CardHeader } from '@/components'
 import { loadStripe } from '@stripe/stripe-js'
 import { environmentVariables } from '@/env'
 import { cn } from '@/lib'
+import { API } from 'aws-amplify'
+import gql from 'graphql-tag'
 
 interface PlansProps {
   products: StripeProduct[]
 }
-
-type BillingInterval = 'year' | 'month'
 
 export const Plans = ({ products }: PlansProps) => {
   // TODO: Consider showing an informative message when there are no products
@@ -26,13 +27,32 @@ export const Plans = ({ products }: PlansProps) => {
     setIsLoadingPrice(price.id)
 
     try {
-      // TODO: Add mutation to start stripe checkout session
+      const { data } = await API.graphql({
+        query: gql`
+          mutation CreateStripeCheckoutSessionMutation(
+            $input: CreateStripeCheckoutSessionInput
+          ) {
+            createStripeCheckoutSession(input: $input) {
+              sessionId
+            }
+          }
+        `,
+        variables: {
+          input: {
+            price: {
+              id: price.id,
+            },
+          },
+        },
+      })
 
       const stripe = await loadStripe(
         environmentVariables.STRIPE_PUBLISHABLE_KEY
       )
 
-      stripe?.redirectToCheckout({ sessionId: '' })
+      stripe?.redirectToCheckout({
+        sessionId: data.createStripeCheckoutSession?.sessionId,
+      })
     } catch (e) {
       console.error('Failed checkout out stripe', e)
     } finally {

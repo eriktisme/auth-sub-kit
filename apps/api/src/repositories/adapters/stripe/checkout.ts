@@ -15,8 +15,7 @@ export class StripeCheckoutRepository implements CheckoutRepository {
     const session = await this.client.checkout.sessions.create({
       payment_method_types: ['card'],
       billing_address_collection: 'required',
-      // TODO: Enable when customer object is created
-      // customer: args.customerId,
+      customer: args.customerId,
       line_items: [
         {
           price: args.priceId,

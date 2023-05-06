@@ -1,5 +1,9 @@
 import { z } from 'zod'
-import { StripePriceSchema, StripeProductSchema } from '../../../domain'
+import {
+  StripeCustomerSchema,
+  StripePriceSchema,
+  StripeProductSchema,
+} from '../../../domain'
 
 export type PriceModel = z.infer<typeof StripePriceSchema>
 
@@ -11,3 +15,7 @@ export type PriceKey = Pick<
 export type ProductModel = z.infer<typeof StripeProductSchema>
 
 export type ProductKey = Pick<z.infer<typeof StripeProductSchema>, 'productId'>
+
+export type CustomerModel = z.infer<typeof StripeCustomerSchema>
+
+export type CustomerKey = Pick<z.infer<typeof StripeCustomerSchema>, 'userId'>
