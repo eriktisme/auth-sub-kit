@@ -5,6 +5,25 @@ type Query {
     @aws_iam
 }
 
+type Mutation {
+  createStripeCheckoutSession(
+    input: CreateStripeCheckoutSessionInput
+  ): CreateStripeCheckoutSessionResponse @aws_cognito_user_pools @aws_iam
+}
+
+type CreateStripeCheckoutSessionResponse @aws_cognito_user_pools @aws_iam {
+  sessionId: String!
+}
+
+input CreateStripeCheckoutSessionInput {
+  price: StripePriceInput!
+  quantity: Int
+}
+
+input StripePriceInput {
+  id: String!
+}
+
 type StripeProduct @aws_cognito_user_pools @aws_api_key @aws_iam {
   id: ID!
   active: Boolean!

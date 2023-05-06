@@ -50,8 +50,9 @@ export class ApiStack extends Stack {
     new Webhooks(this, props)
 
     new Stripe(this, {
-      prefix: props.prefix,
       api,
+      domain: props.domain,
+      prefix: props.prefix,
     })
   }
 }
