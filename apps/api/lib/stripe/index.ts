@@ -1,6 +1,6 @@
 import { Construct } from 'constructs'
 import { GraphqlApi } from 'aws-cdk-lib/aws-appsync'
-import { ActiveProducts } from '../webhooks/active-products'
+import { ActiveProducts } from './active-products'
 
 interface StripeProps {
   api: GraphqlApi
