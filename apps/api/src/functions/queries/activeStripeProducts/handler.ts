@@ -4,7 +4,7 @@ import { HandlerDeps } from './types'
 
 export const buildHandler = async (
   deps: HandlerDeps,
-  event: AppSyncResolverEvent<any>
+  event: AppSyncResolverEvent<{}>
 ): Promise<StripeProduct[]> => {
   const products = await deps.productsService.getActiveProducts()
 
