@@ -23,12 +23,18 @@ export class CustomersService {
     //
   }
 
-  async get(email: string): Promise<StripeCustomer> {
-    return await this.deps.internalCustomersRepository.findByEmail(email)
+  async get(id: string): Promise<StripeCustomer> {
+    return this.deps.internalCustomersRepository.get(id)
+  }
+
+  async findByEmail(email: string): Promise<StripeCustomer> {
+    return this.deps.internalCustomersRepository.findByEmail(email)
   }
 
   async createOrRetrieve(args: CreateOrRetrieveArgs): Promise<StripeCustomer> {
-    let customer = await this.deps.internalCustomersRepository.get(args.userId)
+    let customer = await this.deps.internalCustomersRepository.findByUserId(
+      args.userId
+    )
 
     if (!customer) {
       customer = await this.create(args)

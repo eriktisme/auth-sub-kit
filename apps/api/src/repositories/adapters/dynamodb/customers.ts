@@ -8,7 +8,7 @@ export class DynamoDBCustomersRepository implements CustomersRepository {
     //
   }
 
-  async get(id: string): Promise<StripeCustomer | null> {
+  async findByUserId(id: string): Promise<StripeCustomer | null> {
     return this.dao.get({
       userId: id,
     })
@@ -20,6 +20,18 @@ export class DynamoDBCustomersRepository implements CustomersRepository {
       keyConditionExpression: `email = :email`,
       expressionValues: {
         ':email': email,
+      },
+    })
+
+    return customer[0]!
+  }
+
+  async get(customerId: string): Promise<StripeCustomer> {
+    const customer = await this.dao.query({
+      index: 'customer',
+      keyConditionExpression: `customerId = :customerId`,
+      expressionValues: {
+        ':customerId': customerId,
       },
     })
 

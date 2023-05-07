@@ -7,6 +7,74 @@ import {
   StripeSubscriptionSchema,
 } from '../../../domain'
 
+async function handleCheckoutSessionCompletedEvent(
+  deps: HandlerDeps,
+  checkout: any
+) {
+  const subscription = await deps.stripe.subscriptions.retrieve(
+    checkout.subscription
+  )
+
+  const customer = await deps.customersService.findByEmail(
+    checkout.customer_details.email
+  )
+
+  await deps.subscriptionsService.upsert(
+    StripeSubscriptionSchema.parse({
+      cancelAtPeriodEnd: subscription.cancel_at_period_end
+        ? new Date(subscription.cancel_at_period_end * 1000).toISOString()
+        : undefined,
+      canceledAt: subscription.canceled_at
+        ? new Date(subscription.canceled_at * 1000).toISOString()
+        : undefined,
+      currentPeriodEnd: subscription.current_period_end
+        ? new Date(subscription.current_period_end * 1000).toISOString()
+        : undefined,
+      endedAt: subscription.ended_at
+        ? new Date(subscription.ended_at * 1000).toISOString()
+        : undefined,
+      productId: subscription.items.data[0].price.product,
+      priceId: subscription.items.data[0].price.id,
+      status: subscription.status,
+      subscriptionId: subscription.id,
+      userId: customer.userId,
+      startedAt: new Date(subscription.start_date * 1000).toISOString(),
+    })
+  )
+}
+
+async function handleSubscriptionUpdatedEvent(
+  deps: HandlerDeps,
+  subscription: Stripe.Subscription
+) {
+  const customer = await deps.customersService.get(
+    subscription.customer as string
+  )
+
+  await deps.subscriptionsService.upsert(
+    StripeSubscriptionSchema.parse({
+      cancelAtPeriodEnd: subscription.cancel_at_period_end
+        ? new Date(subscription.cancel_at_period_end * 1000).toISOString()
+        : undefined,
+      canceledAt: subscription.canceled_at
+        ? new Date(subscription.canceled_at * 1000).toISOString()
+        : undefined,
+      currentPeriodEnd: subscription.current_period_end
+        ? new Date(subscription.current_period_end * 1000).toISOString()
+        : undefined,
+      endedAt: subscription.ended_at
+        ? new Date(subscription.ended_at * 1000).toISOString()
+        : undefined,
+      productId: subscription.items.data[0].price.product,
+      priceId: subscription.items.data[0].price.id,
+      status: subscription.status,
+      subscriptionId: subscription.id,
+      userId: customer.userId,
+      startedAt: new Date(subscription.start_date * 1000).toISOString(),
+    })
+  )
+}
+
 export const buildHandler = async (
   deps: HandlerDeps,
   event: APIGatewayProxyEventV2
@@ -61,36 +129,15 @@ export const buildHandler = async (
       case 'checkout.session.completed':
         const checkout = stripeEvent.data.object as any
 
-        const subscription = await deps.stripe.subscriptions.retrieve(
-          checkout.subscription
-        )
+        await handleCheckoutSessionCompletedEvent(deps, checkout)
 
-        const customer = await deps.customersService.get(
-          checkout.customer_details.email
-        )
+        break
+      case 'customer.subscription.updated':
+        const subscription = stripeEvent.data.object as Stripe.Subscription
 
-        await deps.subscriptionsService.upsert(
-          StripeSubscriptionSchema.parse({
-            cancelAtPeriodEnd: subscription.cancel_at_period_end
-              ? new Date(subscription.cancel_at_period_end * 1000).toISOString()
-              : undefined,
-            canceledAt: subscription.canceled_at
-              ? new Date(subscription.canceled_at * 1000).toISOString()
-              : undefined,
-            currentPeriodEnd: subscription.current_period_end
-              ? new Date(subscription.current_period_end * 1000).toISOString()
-              : undefined,
-            endedAt: subscription.ended_at
-              ? new Date(subscription.ended_at * 1000).toISOString()
-              : undefined,
-            productId: subscription.items.data[0].price.product,
-            priceId: subscription.items.data[0].price.id,
-            status: subscription.status,
-            subscriptionId: subscription.id,
-            userId: customer.userId,
-            startedAt: new Date(subscription.start_date * 1000).toISOString(),
-          })
-        )
+        await handleSubscriptionUpdatedEvent(deps, subscription)
+
+        break
     }
   } catch (err) {
     console.error('Failed to construct stripe event', {
