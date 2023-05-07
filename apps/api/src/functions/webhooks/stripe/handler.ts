@@ -41,7 +41,7 @@ export const buildHandler = async (
       case 'price.updated':
         const price = stripeEvent.data.object as Stripe.Price
 
-        await deps.productsService.upsertPrice(
+        await deps.pricesService.upsert(
           StripePriceSchema.parse({
             productId: price.product as string,
             description: price.nickname ?? undefined,
@@ -59,7 +59,7 @@ export const buildHandler = async (
 
         break
       case 'checkout.session.completed':
-        const checkout = stripeEvent.data.object as Stripe.Checkout
+        const checkout = stripeEvent.data.object as any
 
         const subscription = await deps.stripe.subscriptions.retrieve(
           checkout.subscription

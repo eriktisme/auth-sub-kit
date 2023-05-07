@@ -7,7 +7,7 @@ export interface StoreCustomerArgs {
 }
 
 export interface CustomersRepository {
+  findByEmail(email: string): Promise<StripeCustomer>
   get(id: string): Promise<StripeCustomer | null>
-  getByEmail(email: string): Promise<StripeCustomer>
   store(args: StoreCustomerArgs): Promise<StripeCustomer>
 }

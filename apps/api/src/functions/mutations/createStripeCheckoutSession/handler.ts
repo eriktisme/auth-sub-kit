@@ -1,15 +1,10 @@
-import { AppSyncResolverEvent, AppSyncIdentityCognito } from 'aws-lambda'
-import {
-  CreateStripeCheckoutSessionInput,
-  CreateStripeCheckoutSessionResponse,
-} from '../../../appsync'
-import { HandlerDeps } from './types'
+import { AppSyncIdentityCognito } from 'aws-lambda'
+import { CreateStripeCheckoutSessionResponse } from '../../../appsync'
+import { HandlerDeps, HandlerEvent } from './types'
 
 export const buildHandler = async (
   deps: HandlerDeps,
-  event: AppSyncResolverEvent<{
-    input: CreateStripeCheckoutSessionInput
-  }>
+  event: HandlerEvent
 ): Promise<CreateStripeCheckoutSessionResponse> => {
   const identity = event.identity as AppSyncIdentityCognito
 

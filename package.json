@@ -11,6 +11,7 @@
   },
   "scripts": {
     "build": "nx run-many --target=build",
+    "buildtest": "nx run-many --target=buildtest",
     "cdk": "nx run-many --target=cdk",
     "codegen": "graphql-codegen",
     "dev": "nx run-many --target=dev",

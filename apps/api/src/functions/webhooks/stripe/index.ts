@@ -7,6 +7,7 @@ import { config } from '../../../config'
 import { APIGatewayProxyEventV2 } from 'aws-lambda'
 import {
   CustomersService,
+  PricesService,
   ProductsService,
   SubscriptionsService,
 } from '../../../services'
@@ -39,7 +40,7 @@ const [stripeWebhookToken, stripeApiToken] = await Promise.all([
 
 const dynamoDBClient = buildDynamoDBClient()
 
-const stripe = new Stripe(stripeApiToken.SecretString, {
+const stripe = new Stripe(stripeApiToken.SecretString!, {
   apiVersion: '2022-11-15',
 })
 
@@ -55,9 +56,11 @@ export const handler = async (event: APIGatewayProxyEventV2) =>
         subscriptionsRepository:
           buildDynamoDBSubscriptionsRepository(dynamoDBClient),
       }),
+      pricesService: new PricesService({
+        pricesRepository: buildDynamoDBPricesRepository(dynamoDBClient),
+      }),
       productsService: new ProductsService({
         productsRepository: buildDynamoDBProductsRepository(dynamoDBClient),
-        pricesRepository: buildDynamoDBPricesRepository(dynamoDBClient),
       }),
       stripeWebhookToken: stripeWebhookToken.SecretString!,
       stripe,

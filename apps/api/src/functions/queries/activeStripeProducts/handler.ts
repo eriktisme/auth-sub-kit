@@ -1,16 +1,14 @@
-import { AppSyncResolverEvent } from 'aws-lambda'
 import { StripeProduct } from '../../../appsync'
 import { HandlerDeps } from './types'
 
 export const buildHandler = async (
-  deps: HandlerDeps,
-  event: AppSyncResolverEvent<{}>
+  deps: HandlerDeps
 ): Promise<StripeProduct[]> => {
   const products = await deps.productsService.getActiveProducts()
 
   const productsWithPrices = await Promise.all(
     products.map(async (product) => {
-      const prices = await deps.productsService.getProductWithActivePrices(
+      const prices = await deps.pricesService.findPricesForProduct(
         product.productId
       )
 
