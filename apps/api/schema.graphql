@@ -24,9 +24,15 @@ type Mutation {
   ): CreateStripeCheckoutSessionResponse @aws_cognito_user_pools
 }
 
-type CreateStripeCheckoutSessionResponse @aws_cognito_user_pools {
+type StripeCheckoutSession @aws_cognito_user_pools {
   sessionId: String!
 }
+
+type StripeBillingPortalSession @aws_cognito_user_pools {
+  url: String!
+}
+
+union CreateStripeCheckoutSessionResponse = StripeCheckoutSession | StripeBillingPortalSession
 
 input CreateStripeCheckoutSessionInput {
   price: StripePriceInput!

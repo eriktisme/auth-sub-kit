@@ -30,6 +30,11 @@ export class CreateCheckoutSession extends Construct {
       'AuthSubKitStripeCustomers'
     )
 
+    handler.grantDynamoDBTableReadAccess(
+      props.prefix,
+      'AuthSubKitStripeSubscriptions'
+    )
+
     props.stripeApiToken.grantRead(handler)
 
     new AppsyncResolver(this, id, {

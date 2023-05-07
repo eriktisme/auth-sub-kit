@@ -2,7 +2,12 @@
 
 import '@/lib/amplify/client'
 import { Switch } from '@headlessui/react'
-import { StripePrice, StripeProduct, StripeSubscription } from '@/appsync'
+import {
+  CreateStripeCheckoutSessionResponse,
+  StripePrice,
+  StripeProduct,
+  StripeSubscription,
+} from '@/appsync'
 import { useState } from 'react'
 import { Button, Card, CardBody, CardFooter, CardHeader } from '@/components'
 import { loadStripe } from '@stripe/stripe-js'
@@ -26,13 +31,18 @@ export const Plans = ({ products, subscription }: PlansProps) => {
     setIsLoadingPrice(price.id)
 
     try {
-      const result = await API.graphql({
+      const result = await API.graphql<CreateStripeCheckoutSessionResponse>({
         query: gql`
           mutation CreateStripeCheckoutSessionMutation(
             $input: CreateStripeCheckoutSessionInput
           ) {
             createStripeCheckoutSession(input: $input) {
-              sessionId
+              ... on StripeCheckoutSession {
+                sessionId
+              }
+              ... on StripeBillingPortalSession {
+                url
+              }
             }
           }
         `,
@@ -49,9 +59,13 @@ export const Plans = ({ products, subscription }: PlansProps) => {
         environmentVariables.STRIPE_PUBLISHABLE_KEY
       )
 
-      stripe?.redirectToCheckout({
-        sessionId: (result as any).data.createStripeCheckoutSession?.sessionId!,
-      })
+      if ('url' in result.data.createStripeCheckoutSession) {
+        window.location.href = result.data.createStripeCheckoutSession.url
+      } else {
+        stripe?.redirectToCheckout({
+          sessionId: result.data.createStripeCheckoutSession?.sessionId!,
+        })
+      }
     } catch (e) {
       console.error('Failed checkout out stripe', e)
     } finally {

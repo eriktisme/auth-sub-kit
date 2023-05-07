@@ -15,6 +15,14 @@ interface CreateSessionResult {
   sessionId: string
 }
 
+interface CreateBillingPortalSessionArgs {
+  customerId: string
+}
+
+interface CreateBillingPortalSessionResult {
+  url: string
+}
+
 export class CheckoutService {
   constructor(protected deps: CheckoutServiceDeps) {
     //
@@ -25,6 +33,17 @@ export class CheckoutService {
 
     return {
       sessionId,
+    }
+  }
+
+  async createBillingPortalSession(
+    args: CreateBillingPortalSessionArgs
+  ): Promise<CreateBillingPortalSessionResult> {
+    const { url } =
+      await this.deps.checkoutRepository.createBillingPortalSession(args)
+
+    return {
+      url,
     }
   }
 }

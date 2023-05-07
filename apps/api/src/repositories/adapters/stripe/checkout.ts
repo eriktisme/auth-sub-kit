@@ -1,5 +1,7 @@
 import {
   CheckoutRepository,
+  CreateBillingPortalSessionArgs,
+  CreateBillingPortalSessionResult,
   CreateSessionArgs,
   CreateSessionResult,
 } from '../../ports'
@@ -9,6 +11,17 @@ import { config } from '../../../config'
 export class StripeCheckoutRepository implements CheckoutRepository {
   constructor(protected client: Stripe) {
     //
+  }
+
+  async createBillingPortalSession(
+    args: CreateBillingPortalSessionArgs
+  ): Promise<CreateBillingPortalSessionResult> {
+    const session = await this.client.billingPortal.sessions.create({
+      customer: args.customerId,
+      return_url: `https://${config.domain}/account/billing`,
+    })
+
+    return { url: session.url }
   }
 
   async createSession(args: CreateSessionArgs): Promise<CreateSessionResult> {

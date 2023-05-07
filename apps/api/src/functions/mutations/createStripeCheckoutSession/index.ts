@@ -1,7 +1,12 @@
 import { buildHandler } from './handler'
-import { CheckoutService, CustomersService } from '../../../services'
+import {
+  CheckoutService,
+  CustomersService,
+  SubscriptionsService,
+} from '../../../services'
 import {
   buildDynamoDBCustomersRepository,
+  buildDynamoDBSubscriptionsRepository,
   buildStripeCheckoutRepository,
   buildStripeCustomersRepository,
 } from '../../../repositories'
@@ -40,6 +45,10 @@ export const handler = async (event: HandlerEvent) =>
       }),
       checkoutService: new CheckoutService({
         checkoutRepository: buildStripeCheckoutRepository(stripe),
+      }),
+      subscriptionsService: new SubscriptionsService({
+        subscriptionsRepository:
+          buildDynamoDBSubscriptionsRepository(dynamoDBClient),
       }),
     },
     event

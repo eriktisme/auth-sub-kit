@@ -31,32 +31,36 @@ export class NodejsLambda extends NodejsFunction {
     })
   }
 
-  grantDynamoDBTableReadWriteAccess(prefix: string, tableName: string) {
-    const table = Table.fromTableAttributes(
-      this,
-      `${this.functionName}-table-${tableName}`,
-      {
-        tableName: `${prefix}.${tableName}`,
-        grantIndexPermissions: true,
-      }
-    )
+  grantDynamoDBTableReadWriteAccess(prefix: string, ...tableNames: string[]) {
+    for (const tableName of tableNames) {
+      const table = Table.fromTableAttributes(
+        this,
+        `${this.functionName}-table-${tableName}`,
+        {
+          tableName: `${prefix}.${tableName}`,
+          grantIndexPermissions: true,
+        }
+      )
 
-    table.grantReadWriteData(this)
+      table.grantReadWriteData(this)
+    }
 
     return this
   }
 
-  grantDynamoDBTableReadAccess(prefix: string, tableName: string) {
-    const table = Table.fromTableAttributes(
-      this,
-      `${this.functionName}-table-${tableName}`,
-      {
-        tableName: `${prefix}.${tableName}`,
-        grantIndexPermissions: true,
-      }
-    )
+  grantDynamoDBTableReadAccess(prefix: string, ...tableNames: string[]) {
+    for (const tableName of tableNames) {
+      const table = Table.fromTableAttributes(
+        this,
+        `${this.functionName}-table-${tableName}`,
+        {
+          tableName: `${prefix}.${tableName}`,
+          grantIndexPermissions: true,
+        }
+      )
 
-    table.grantReadData(this)
+      table.grantReadData(this)
+    }
 
     return this
   }
