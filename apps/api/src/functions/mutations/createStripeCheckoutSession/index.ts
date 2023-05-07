@@ -12,6 +12,7 @@ import {
 } from '@aws-sdk/client-secrets-manager'
 import { config } from '../../../config'
 import { buildDynamoDBClient } from '../../../utils'
+import { HandlerEvent } from './types'
 
 const secretManager = new SecretsManagerClient({
   //
@@ -25,11 +26,11 @@ const stripeApiToken = await secretManager.send(
 
 const dynamoDBClient = buildDynamoDBClient()
 
-const stripe = new Stripe(stripeApiToken.SecretString, {
+const stripe = new Stripe(stripeApiToken.SecretString!, {
   apiVersion: '2022-11-15',
 })
 
-export const handler = async (event) =>
+export const handler = async (event: HandlerEvent) =>
   buildHandler(
     {
       customersService: new CustomersService({

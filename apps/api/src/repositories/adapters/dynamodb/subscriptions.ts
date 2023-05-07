@@ -10,6 +10,12 @@ export class DynamoDBSubscriptionsRepository
     //
   }
 
+  async get(userId: string): Promise<StripeSubscription | null> {
+    return this.dao.get({
+      userId,
+    })
+  }
+
   async upsert(args: UpsertSubscriptionArgs): Promise<StripeSubscription> {
     await this.dao.put(args)
 

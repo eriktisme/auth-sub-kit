@@ -1,6 +1,7 @@
 {
   "name": "@auth-sub-kit/api",
   "scripts": {
+    "buildtest": "tsc --noEmit",
     "cdk": "cdk",
     "lint": "eslint",
     "test": "concurrently \"pnpm test:cdk\"",

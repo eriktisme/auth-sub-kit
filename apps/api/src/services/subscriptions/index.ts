@@ -12,6 +12,10 @@ export class SubscriptionsService {
     //
   }
 
+  async get(userId: string): Promise<StripeSubscription | null> {
+    return this.deps.subscriptionsRepository.get(userId)
+  }
+
   async upsert(args: UpsertSubscriptionArgs): Promise<void> {
     await this.deps.subscriptionsRepository.upsert(args)
   }

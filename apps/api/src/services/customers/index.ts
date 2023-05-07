@@ -24,7 +24,7 @@ export class CustomersService {
   }
 
   async get(email: string): Promise<StripeCustomer> {
-    return await this.deps.internalCustomersRepository.getByEmail(email)
+    return await this.deps.internalCustomersRepository.findByEmail(email)
   }
 
   async createOrRetrieve(args: CreateOrRetrieveArgs): Promise<StripeCustomer> {

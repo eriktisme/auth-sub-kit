@@ -72,6 +72,13 @@ export class PlatformStack extends Stack {
             type: AttributeType.STRING,
           },
         },
+        {
+          name: 'price',
+          hashKey: {
+            name: 'priceId',
+            type: AttributeType.STRING,
+          },
+        },
       ],
     })
 
