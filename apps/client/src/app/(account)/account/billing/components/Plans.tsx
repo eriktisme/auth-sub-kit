@@ -59,11 +59,12 @@ export const Plans = ({ products, subscription }: PlansProps) => {
         environmentVariables.STRIPE_PUBLISHABLE_KEY
       )
 
-      if ('url' in result.data.createStripeCheckoutSession) {
-        window.location.href = result.data.createStripeCheckoutSession.url
+      const data = (result as any).data
+      if ('url' in data.createStripeCheckoutSession) {
+        window.location.href = data.createStripeCheckoutSession.url
       } else {
         stripe?.redirectToCheckout({
-          sessionId: result.data.createStripeCheckoutSession?.sessionId!,
+          sessionId: data.createStripeCheckoutSession?.sessionId!,
         })
       }
     } catch (e) {
