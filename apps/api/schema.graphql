@@ -3,6 +3,19 @@ type Query {
     @aws_cognito_user_pools
     @aws_api_key
     @aws_iam
+  activeStripeSubscription: StripeSubscription
+}
+
+type StripeSubscription @aws_cognito_user_pools {
+  id: ID!
+  status: String!
+  product: StripeProduct!
+  price: StripePrice!
+  canceledAt: AWSDateTime
+  cancelAtPeriodEnd: AWSDateTime
+  currentPeriodEnd: AWSDateTime!
+  startedAt: AWSDateTime!
+  endedAt: AWSDateTime
 }
 
 type Mutation {

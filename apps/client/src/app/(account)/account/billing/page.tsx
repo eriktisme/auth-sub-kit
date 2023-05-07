@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 export default async function Page() {
   const SSR = getAmplifyWithSSRContext()
 
-  const { data } = await SSR.API.graphql({
+  const result = await SSR.API.graphql({
     query: gql`
-      query BillingSettingsActiveStripeProductsQuery {
+      query BillingSettingsQuery {
         activeStripeProducts {
           id
           name
@@ -26,6 +26,15 @@ export default async function Page() {
             intervalCount
           }
         }
+        activeStripeSubscription {
+          id
+          product {
+            id
+          }
+          price {
+            id
+          }
+        }
       }
     `,
   })
@@ -36,7 +45,10 @@ export default async function Page() {
         heading="Billing"
         description="Manage your billing and subscription plan."
       />
-      <Plans products={data.activeStripeProducts} />
+      <Plans
+        products={result.data.activeStripeProducts}
+        subscription={result.data.activeStripeSubscription ?? undefined}
+      />
     </Shell>
   )
 }

@@ -1,0 +1,11 @@
+{
+  "version": "2017-02-28",
+  "operation": "Invoke",
+  "payload": {
+    "arguments": $utils.toJson({
+      "productId": ${ctx.source.productId}
+    }),
+    "ctx": $utils.toJson(${ctx}),
+    "request": $utils.toJson(${ctx.request})
+  }
+}

@@ -2,7 +2,7 @@
 
 import '@/lib/amplify/client'
 import { Switch } from '@headlessui/react'
-import { StripePrice, StripeProduct } from '@/appsync'
+import { StripePrice, StripeProduct, StripeSubscription } from '@/appsync'
 import { useState } from 'react'
 import { Button, Card, CardBody, CardFooter, CardHeader } from '@/components'
 import { loadStripe } from '@stripe/stripe-js'
@@ -13,12 +13,11 @@ import gql from 'graphql-tag'
 
 interface PlansProps {
   products: StripeProduct[]
+  subscription?: StripeSubscription
 }
 
-export const Plans = ({ products }: PlansProps) => {
+export const Plans = ({ products, subscription }: PlansProps) => {
   // TODO: Consider showing an informative message when there are no products
-  // TODO: Add active subscription check
-
   const [annualBillingEnabled, setAnnualBillingEnabled] = useState(false)
 
   const [loadingPrice, setIsLoadingPrice] = useState<string>()
@@ -121,7 +120,9 @@ export const Plans = ({ products }: PlansProps) => {
                   isLoading={loadingPrice === price.id}
                   onClick={() => handleCheckout(price)}
                 >
-                  Upgrade
+                  {product.id === subscription?.product.id
+                    ? 'Manage'
+                    : 'Subscribe'}
                 </Button>
               </CardFooter>
             </Card>
