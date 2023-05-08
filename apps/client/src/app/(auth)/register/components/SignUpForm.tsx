@@ -1,20 +1,20 @@
 'use client'
 
-import { Button, Card, CardBody, TextInputField } from '@/components'
+import { Button, TextInputField } from '@/components'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SocialLoginForm } from '../../components/SocialLoginForm'
 
-const LoginFormSchema = z.object({
+const SignUpFormSchema = z.object({
   email: z.string().email(),
 })
 
-type FormData = z.infer<typeof LoginFormSchema>
+type FormData = z.infer<typeof SignUpFormSchema>
 
-export const LoginForm = () => {
+export const SignUpForm = () => {
   const { handleSubmit, register } = useForm<FormData>({
-    resolver: zodResolver(LoginFormSchema),
+    resolver: zodResolver(SignUpFormSchema),
   })
 
   const onSubmit = async (data: FormData) => {
@@ -22,12 +22,14 @@ export const LoginForm = () => {
   }
 
   return (
-    <Card>
-      <CardBody className="pt-5 sm:pt-6">
+    <div>
+      <div className="pt-5 sm:pt-6">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <TextInputField {...register('email')} label="Email address" />
           <div>
-            <Button className="w-full justify-center">Log in with email</Button>
+            <Button className="w-full justify-center">
+              Sign up with email
+            </Button>
           </div>
         </form>
         <div>
@@ -40,7 +42,7 @@ export const LoginForm = () => {
           </div>
         </div>
         <SocialLoginForm />
-      </CardBody>
-    </Card>
+      </div>
+    </div>
   )
 }
