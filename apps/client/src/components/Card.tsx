@@ -1,12 +1,24 @@
-import { PropsWithChildren, ReactNode } from 'react'
+import { forwardRef, HTMLAttributes, PropsWithChildren, ReactNode } from 'react'
+import { cn } from '@/lib'
 
 export const Card = ({ children }: PropsWithChildren) => {
   return <div className="overflow-hidden rounded-lg bg-white">{children}</div>
 }
 
-export const CardBody = ({ children }: PropsWithChildren) => {
-  return <div className="px-4 py-5 pt-0 sm:p-6 sm:pt-0">{children}</div>
-}
+export const CardBody = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(({ children, className = 'sm:pt-0', ...props }, ref) => {
+  return (
+    <div
+      className={cn('px-4 py-5 pt-0 sm:p-6', className)}
+      {...props}
+      ref={ref}
+    >
+      {children}
+    </div>
+  )
+})
 
 interface CardHeaderProps {
   heading: string

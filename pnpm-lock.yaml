@@ -108,7 +108,15 @@ importers:
         specifier: ^8.10.114
         version: 8.10.114
 
-  apps/auth: {}
+  apps/auth:
+    dependencies:
+      '@auth-sub-kit/cdk-utils':
+        specifier: workspace:*
+        version: link:../../packages/cdk-utils
+    devDependencies:
+      '@types/aws-lambda':
+        specifier: ^8.10.114
+        version: 8.10.114
 
   apps/client:
     dependencies:

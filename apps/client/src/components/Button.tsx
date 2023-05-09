@@ -32,7 +32,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         className={cn(
-          'flex flex-row items-center rounded-md px-4 py-2 text-sm font-semibold shadow-sm',
+          'inline-flex flex-row items-center rounded-md px-4 py-2 text-sm font-semibold shadow-sm',
           ...appearances[appearance],
           isDisabled || isLoading ? 'cursor-not-allowed opacity-50' : null,
           className
