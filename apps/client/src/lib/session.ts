@@ -10,9 +10,9 @@ export const getCurrentUser = async (Auth: any): Promise<User | null> => {
       lastName: attributes.family_name,
       photo: attributes.picture,
     }
-  } catch (e) {
-    if (e !== 'No current user') {
-      console.error('An error occurred fetching current user', e)
+  } catch (err) {
+    if (!['The user is not authenticated', 'No current user'].includes(err)) {
+      console.error('An error occurred fetching current user', err)
     }
 
     return null

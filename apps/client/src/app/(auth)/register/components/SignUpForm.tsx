@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SocialLoginForm } from '../../components/SocialLoginForm'
+import { Auth } from 'aws-amplify'
 
 const SignUpFormSchema = z.object({
   email: z.string().email(),
@@ -18,7 +19,13 @@ export const SignUpForm = () => {
   })
 
   const onSubmit = async (data: FormData) => {
-    //
+    await Auth.signUp({
+      username: data.email,
+      password: 'SecurePassword1!', // TODO: Generate random password
+      attributes: {
+        email: data.email,
+      },
+    })
   }
 
   return (

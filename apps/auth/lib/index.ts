@@ -1,6 +1,7 @@
 import { RemovalPolicy, SecretValue, Stack, StackProps } from 'aws-cdk-lib'
 import { Construct } from 'constructs'
 import {
+  Mfa,
   ProviderAttribute,
   UserPool,
   UserPoolClient,
@@ -9,6 +10,7 @@ import {
   UserPoolIdentityProviderGoogle,
 } from 'aws-cdk-lib/aws-cognito'
 import { StringParameter } from 'aws-cdk-lib/aws-ssm'
+import { NodejsLambda } from '@auth-sub-kit/cdk-utils'
 
 interface GoogleClientProps {
   clientId: string
@@ -25,14 +27,47 @@ export class AuthStack extends Stack {
   constructor(scope: Construct, id: string, props: AppStackProps) {
     super(scope, id, props)
 
+    const preSignUp = new NodejsLambda(this, 'cognito-pre-sign-up-trigger', {
+      entry: './src/triggers/preSignUp/index.ts',
+    })
+
+    const createAuthChallenge = new NodejsLambda(
+      this,
+      'cognito-create-auth-challenge-trigger',
+      {
+        entry: './src/triggers/createAuthChallenge/index.ts',
+      }
+    )
+
+    const defineAuthChallenge = new NodejsLambda(
+      this,
+      'cognito-define-auth-challenge-trigger',
+      {
+        entry: './src/triggers/defineAuthChallenge/index.ts',
+      }
+    )
+
+    const verifyAuthChallengeResponse = new NodejsLambda(
+      this,
+      'cognito-verify-auth-challenge-trigger',
+      {
+        entry: './src/triggers/verifyAuthChallenge/index.ts',
+      }
+    )
+
     const userPool = new UserPool(this, 'cognito-user-pool', {
-      autoVerify: {
+      keepOriginal: {
         email: true,
       },
       lambdaTriggers: {
-        //
+        createAuthChallenge,
+        defineAuthChallenge,
+        preSignUp,
+        verifyAuthChallengeResponse,
       },
+      mfa: Mfa.OFF,
       removalPolicy: RemovalPolicy.DESTROY,
+      selfSignUpEnabled: true,
       signInAliases: {
         email: true,
       },
