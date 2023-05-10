@@ -26,13 +26,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     } = props
 
     const appearances: { [key in ButtonAppearance]: string[] } = {
-      default: ['bg-black text-white'],
+      default: [
+        'bg-zinc-800 text-zinc-100 hover:bg-zinc-700 active:bg-zinc-800 active:text-zinc-100/70 active:transition-none dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:active:bg-zinc-700 dark:active:text-zinc-100/70',
+      ],
     }
 
     return (
       <button
         className={cn(
-          'flex flex-row items-center rounded-md px-4 py-2 text-sm font-semibold shadow-sm',
+          'inline-flex flex-none items-center justify-center gap-2 rounded-md  px-3 py-2 text-sm font-semibold transition',
           ...appearances[appearance],
           isDisabled || isLoading ? 'cursor-not-allowed opacity-50' : null,
           className

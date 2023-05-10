@@ -1,9 +1,10 @@
 import { site } from '@/config'
+import { ThemeToggle } from './ThemeToggle'
 
 export const SiteFooter = () => {
   return (
     <footer className="mx-auto w-full max-w-7xl px-4 py-10 lg:px-8">
-      <div className="flex flex-col items-center gap-4 md:flex-row md:gap-0">
+      <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between md:gap-0">
         <p className="text-center text-sm leading-loose md:text-left">
           Built by{' '}
           <a
@@ -26,6 +27,7 @@ export const SiteFooter = () => {
             GitHub
           </a>
         </p>
+        <ThemeToggle />
       </div>
     </footer>
   )
