@@ -8,6 +8,7 @@
     "test:cdk": "jest --passWithNoTests"
   },
   "dependencies": {
+    "@auth-sub-kit/auth": "workspace:*",
     "@auth-sub-kit/cdk-utils": "workspace:*",
     "@auth-sub-kit/platform": "workspace:*",
     "@aws-sdk/client-dynamodb": "^3.327.0",

@@ -76,6 +76,9 @@ importers:
 
   apps/api:
     dependencies:
+      '@auth-sub-kit/auth':
+        specifier: workspace:*
+        version: link:../auth
       '@auth-sub-kit/cdk-utils':
         specifier: workspace:*
         version: link:../../packages/cdk-utils
