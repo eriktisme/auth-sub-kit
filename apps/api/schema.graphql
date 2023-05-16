@@ -32,7 +32,9 @@ type StripeBillingPortalSession @aws_cognito_user_pools {
   url: String!
 }
 
-union CreateStripeCheckoutSessionResponse = StripeCheckoutSession | StripeBillingPortalSession
+union CreateStripeCheckoutSessionResponse =
+    StripeCheckoutSession
+  | StripeBillingPortalSession
 
 input CreateStripeCheckoutSessionInput {
   price: StripePriceInput!

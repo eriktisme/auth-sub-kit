@@ -9,6 +9,7 @@ import {
   UserPoolIdentityProviderGoogle,
 } from 'aws-cdk-lib/aws-cognito'
 import { StringParameter } from 'aws-cdk-lib/aws-ssm'
+import { NodejsLambda } from '@auth-sub-kit/cdk-utils'
 
 interface GoogleClientProps {
   clientId: string
@@ -25,12 +26,16 @@ export class AuthStack extends Stack {
   constructor(scope: Construct, id: string, props: AppStackProps) {
     super(scope, id, props)
 
+    const preSignUp = new NodejsLambda(this, 'cognito-pre-sign-up-trigger', {
+      entry: './src/triggers/preSignUp/index.ts',
+    })
+
     const userPool = new UserPool(this, 'cognito-user-pool', {
       autoVerify: {
         email: true,
       },
       lambdaTriggers: {
-        //
+        preSignUp,
       },
       removalPolicy: RemovalPolicy.DESTROY,
       signInAliases: {
