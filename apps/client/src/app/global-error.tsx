@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect } from 'react'
-import { captureUnderscoreErrorException } from '@sentry/nextjs'
 
 export default function GlobalError({
   error,
@@ -15,9 +14,7 @@ export default function GlobalError({
       return
     }
 
-    captureUnderscoreErrorException({
-      err: error,
-    })
+    console.error('An error occurred', error)
   }, [error])
 
   return (
